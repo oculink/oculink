@@ -32,14 +32,14 @@ function App() {
     <div className="main-bg scanlines">
       {/* Main Content Area - Vertical Stack */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
-        {/* Header / Banner - Error Dialog Style */}
+        {/* Header / Banner - VHS Style */}
         <div 
           id="header"
           className="error-dialog"
           style={{ ...windowLayout.header, zIndex: zIndex['header'] || 5 }}
           onClick={() => bringToFront('header')}
         >
-          <HeaderContent viewerCount={viewerCount} />
+          <HeaderContent />
         </div>
 
         {/* About Me - Dark Terminal */}
@@ -52,6 +52,7 @@ function App() {
           onFocus={() => bringToFront('about')}
         >
           <AboutMeContent />
+          <CommentSection theme="terminal" />
         </Win95Window>
 
         {/* Fastfetch - Dracula */}
@@ -64,6 +65,7 @@ function App() {
           onFocus={() => bringToFront('fastfetch')}
         >
           <FastfetchContent />
+          <CommentSection theme="dracula" />
         </Win95Window>
 
         {/* Skills - Amber CRT */}
@@ -76,6 +78,7 @@ function App() {
           onFocus={() => bringToFront('skills')}
         >
           <SkillsContent />
+          <CommentSection theme="amber" />
         </Win95Window>
 
         {/* Contact - Blood Red Gothic */}
@@ -88,6 +91,7 @@ function App() {
           onFocus={() => bringToFront('contact')}
         >
           <ContactContent />
+          <CommentSection theme="blood" />
         </Win95Window>
 
       </div>
@@ -96,6 +100,109 @@ function App() {
 }
 
 // ===== COMPONENTS =====
+
+function CommentSection({ theme }: { theme: 'terminal' | 'dracula' | 'amber' | 'blood' }) {
+  const [comments, setComments] = useState<Array<{ name: string; text: string; time: string }>>([
+    { name: 'anon_user', text: 'cool setup bro', time: '2h ago' },
+    { name: 'linux_fan', text: 'nice specs', time: '5h ago' },
+  ]);
+  const [newName, setNewName] = useState('');
+  const [newComment, setNewComment] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newName.trim() && newComment.trim()) {
+      setComments([{ name: newName, text: newComment, time: 'just now' }, ...comments]);
+      setNewName('');
+      setNewComment('');
+    }
+  };
+
+  const themeColors = {
+    terminal: { border: '#00ffff', bg: '#0a0a1e', text: '#00ffff', input: '#1a1a2e' },
+    dracula: { border: '#bd93f9', bg: '#282a36', text: '#f8f8f2', input: '#44475a' },
+    amber: { border: '#ffb000', bg: '#1a0f05', text: '#ffb000', input: '#2a1a0f' },
+    blood: { border: '#8b0000', bg: '#1a0505', text: '#ff4444', input: '#2d0a0a' },
+  };
+
+  const colors = themeColors[theme];
+
+  return (
+    <div className="comment-section" style={{ marginTop: '20px', borderTop: `2px solid ${colors.border}`, paddingTop: '15px' }}>
+      <h3 style={{ color: colors.text, fontSize: '18px', marginBottom: '10px', fontFamily: 'VT323, monospace' }}>
+        Comments
+      </h3>
+      
+      {/* Comment list */}
+      <div className="comment-list" style={{ marginBottom: '15px', maxHeight: '200px', overflowY: 'auto' }}>
+        {comments.map((comment, i) => (
+          <div key={i} style={{ 
+            background: colors.input, 
+            border: `1px solid ${colors.border}`,
+            padding: '8px',
+            marginBottom: '8px',
+            fontFamily: 'VT323, monospace'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+              <span style={{ color: colors.text, fontWeight: 'bold' }}>{comment.name}</span>
+              <span style={{ color: colors.text, fontSize: '12px', opacity: 0.7 }}>{comment.time}</span>
+            </div>
+            <div style={{ color: colors.text }}>{comment.text}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Comment form */}
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <input
+          type="text"
+          placeholder="Name"
+          value={newName}
+          onChange={(e) => setNewName(e.target.value)}
+          style={{
+            background: colors.input,
+            border: `2px solid ${colors.border}`,
+            color: colors.text,
+            padding: '6px',
+            fontFamily: 'VT323, monospace',
+            fontSize: '14px'
+          }}
+        />
+        <textarea
+          placeholder="Write a comment..."
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          rows={3}
+          style={{
+            background: colors.input,
+            border: `2px solid ${colors.border}`,
+            color: colors.text,
+            padding: '6px',
+            fontFamily: 'VT323, monospace',
+            fontSize: '14px',
+            resize: 'vertical'
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            background: '#c0c0c0',
+            border: '2px solid',
+            borderColor: '#ffffff #808080 #808080 #ffffff',
+            padding: '6px 16px',
+            fontFamily: 'VT323, monospace',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            alignSelf: 'flex-start'
+          }}
+        >
+          Post Comment
+        </button>
+      </form>
+    </div>
+  );
+}
 
 function Win95Window({ 
   id,
@@ -138,9 +245,9 @@ function Win95Window({
   );
 }
 
-function HeaderContent({ viewerCount }: { viewerCount: number }) {
+function HeaderContent() {
   return (
-    <div className="error-dialog-content">
+    <div className="vhs-header">
       {/* Title bar */}
       <div className="error-title-bar">
         <span className="error-title-text">oculink.exe</span>
@@ -151,29 +258,30 @@ function HeaderContent({ viewerCount }: { viewerCount: number }) {
         </div>
       </div>
 
-      {/* Content area */}
-      <div className="error-content-area">
-        {/* Icon and message */}
-        <div className="error-message-section">
-          {/* Warning icon */}
-          <div className="error-icon">
-            <div className="error-icon-inner">
-              <span>!</span>
-            </div>
-          </div>
-
-          {/* Message text */}
-          <div className="error-message-text">
-            <p className="error-main-text">Welcome to oculink's system</p>
-            <p className="error-sub-text">Developer | Arch Linux | 7900 XTX | 64GB DDR5</p>
-            <p className="error-status-text">Status: Currently coding...</p>
-          </div>
+      {/* Main content - minimal with VHS glitch */}
+      <div className="vhs-content">
+        <div className="vhs-glitch-container">
+          <h1 className="vhs-name">oculink</h1>
         </div>
 
-        {/* Buttons */}
-        <div className="error-button-section">
-          <button className="error-ok-btn">OK</button>
-          <button className="error-cancel-btn">Cancel</button>
+        {/* Social buttons */}
+        <div className="social-buttons">
+          <a href="https://github.com/oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
+            <img src="https://cdn.simpleicons.org/github/white" alt="GitHub" className="social-icon" />
+            <span>GitHub</span>
+          </a>
+          <a href="#" className="social-btn">
+            <img src="https://cdn.simpleicons.org/x/white" alt="Twitter" className="social-icon" />
+            <span>Twitter</span>
+          </a>
+          <a href="#" className="social-btn">
+            <img src="https://cdn.simpleicons.org/discord/white" alt="Discord" className="social-icon" />
+            <span>Discord</span>
+          </a>
+          <a href="#" className="social-btn">
+            <img src="https://cdn.simpleicons.org/gmail/white" alt="Email" className="social-icon" />
+            <span>Email</span>
+          </a>
         </div>
       </div>
     </div>
