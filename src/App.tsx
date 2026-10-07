@@ -3,16 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 function App() {
   const [zIndex, setZIndex] = useState<Record<string, number>>({});
   const [highestZ, setHighestZ] = useState(10);
-  const [viewerCount, setViewerCount] = useState(1337);
   const [timestamp, setTimestamp] = useState('00:00:00');
-
-  // Simulate viewer count fluctuation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setViewerCount(prev => prev + Math.floor(Math.random() * 11) - 5);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
 
   // VHS timestamp counter
   useEffect(() => {
@@ -33,13 +24,12 @@ function App() {
     setZIndex(prev => ({ ...prev, [id]: newZ }));
   };
 
-  // Window layout - vertical stack with slight rotations, no overlap
+  // Window layout - side by side with inconsistent heights
   const windowLayout = useMemo(() => ({
     header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
-    about: { width: 'min(500px, 92vw)', transform: 'rotate(0.4deg)', marginLeft: '5%' },
-    fastfetch: { width: 'min(520px, 92vw)', transform: 'rotate(-0.5deg)', marginLeft: 'auto', marginRight: '3%' },
-    skills: { width: 'min(480px, 92vw)', transform: 'rotate(0.3deg)', marginLeft: '8%' },
-    contact: { width: 'min(600px, 94vw)', transform: 'rotate(-0.2deg)', margin: '0 auto' },
+    about: { width: '30%', height: '400px', transform: 'rotate(0.4deg)' },
+    fastfetch: { width: '35%', height: '500px', transform: 'rotate(-0.5deg)' },
+    skills: { width: '30%', height: '450px', transform: 'rotate(0.3deg)' },
   }), []);
 
   return (
@@ -49,9 +39,9 @@ function App() {
       <div className="vhs-timestamp">PLAY ▶ {timestamp}</div>
       <div className="noise-overlay"></div>
 
-      {/* Main Content Area - Vertical Stack */}
+      {/* Main Content Area - Side by Side */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
-        {/* Header / Banner - VHS Style */}
+        {/* Header - Full width */}
         <div 
           id="header"
           className="error-dialog"
@@ -61,167 +51,50 @@ function App() {
           <HeaderContent />
         </div>
 
-        {/* About Me - Dark Terminal */}
-        <Win95Window
-          id="about"
-          title="~/about_me.txt"
-          theme="terminal"
-          style={windowLayout.about}
-          zIndex={zIndex['about'] || 6}
-          onFocus={() => bringToFront('about')}
-        >
-          <AboutMeContent />
-          <CommentSection theme="terminal" />
-        </Win95Window>
+        {/* Windows Row - Side by side */}
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'flex-start' }}>
+          {/* About Me - Dark Terminal */}
+          <Win95Window
+            id="about"
+            title="~/about_me.txt"
+            theme="terminal"
+            style={windowLayout.about}
+            zIndex={zIndex['about'] || 6}
+            onFocus={() => bringToFront('about')}
+          >
+            <AboutMeContent />
+          </Win95Window>
 
-        {/* Fastfetch - Dracula */}
-        <Win95Window
-          id="fastfetch"
-          title="oculink@archlinux: ~"
-          theme="dracula"
-          style={windowLayout.fastfetch}
-          zIndex={zIndex['fastfetch'] || 8}
-          onFocus={() => bringToFront('fastfetch')}
-        >
-          <FastfetchContent />
-          <CommentSection theme="dracula" />
-        </Win95Window>
+          {/* Fastfetch - Dracula */}
+          <Win95Window
+            id="fastfetch"
+            title="oculink@archlinux: ~"
+            theme="dracula"
+            style={windowLayout.fastfetch}
+            zIndex={zIndex['fastfetch'] || 8}
+            onFocus={() => bringToFront('fastfetch')}
+          >
+            <FastfetchContent />
+          </Win95Window>
 
-        {/* Skills - Amber CRT */}
-        <Win95Window
-          id="skills"
-          title="C:\SKILLS.CONFIG"
-          theme="amber"
-          style={windowLayout.skills}
-          zIndex={zIndex['skills'] || 3}
-          onFocus={() => bringToFront('skills')}
-        >
-          <SkillsContent />
-          <CommentSection theme="amber" />
-        </Win95Window>
-
-        {/* Contact - Blood Red Gothic */}
-        <Win95Window
-          id="contact"
-          title="⛧ CONTACT.SYS ⛧"
-          theme="blood"
-          style={windowLayout.contact}
-          zIndex={zIndex['contact'] || 2}
-          onFocus={() => bringToFront('contact')}
-        >
-          <ContactContent />
-          <CommentSection theme="blood" />
-        </Win95Window>
-
+          {/* Skills - Amber CRT */}
+          <Win95Window
+            id="skills"
+            title="C:\SKILLS.CONFIG"
+            theme="amber"
+            style={windowLayout.skills}
+            zIndex={zIndex['skills'] || 3}
+            onFocus={() => bringToFront('skills')}
+          >
+            <SkillsContent />
+          </Win95Window>
+        </div>
       </div>
     </div>
   );
 }
 
 // ===== COMPONENTS =====
-
-function CommentSection({ theme }: { theme: 'terminal' | 'dracula' | 'amber' | 'blood' }) {
-  const [comments, setComments] = useState<Array<{ name: string; text: string; time: string }>>([
-    { name: 'anon_user', text: 'cool setup bro', time: '2h ago' },
-    { name: 'linux_fan', text: 'nice specs', time: '5h ago' },
-  ]);
-  const [newName, setNewName] = useState('');
-  const [newComment, setNewComment] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newName.trim() && newComment.trim()) {
-      setComments([{ name: newName, text: newComment, time: 'just now' }, ...comments]);
-      setNewName('');
-      setNewComment('');
-    }
-  };
-
-  const themeColors = {
-    terminal: { border: '#00ffff', bg: '#0a0a1e', text: '#00ffff', input: '#1a1a2e' },
-    dracula: { border: '#bd93f9', bg: '#282a36', text: '#f8f8f2', input: '#44475a' },
-    amber: { border: '#ffb000', bg: '#1a0f05', text: '#ffb000', input: '#2a1a0f' },
-    blood: { border: '#8b0000', bg: '#1a0505', text: '#ff4444', input: '#2d0a0a' },
-  };
-
-  const colors = themeColors[theme];
-
-  return (
-    <div className="comment-section" style={{ marginTop: '20px', borderTop: `2px solid ${colors.border}`, paddingTop: '15px' }}>
-      <h3 style={{ color: colors.text, fontSize: '18px', marginBottom: '10px', fontFamily: 'VT323, monospace' }}>
-        Comments
-      </h3>
-      
-      {/* Comment list */}
-      <div className="comment-list" style={{ marginBottom: '15px', maxHeight: '200px', overflowY: 'auto' }}>
-        {comments.map((comment, i) => (
-          <div key={i} style={{ 
-            background: colors.input, 
-            border: `1px solid ${colors.border}`,
-            padding: '8px',
-            marginBottom: '8px',
-            fontFamily: 'VT323, monospace'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-              <span style={{ color: colors.text, fontWeight: 'bold' }}>{comment.name}</span>
-              <span style={{ color: colors.text, fontSize: '12px', opacity: 0.7 }}>{comment.time}</span>
-            </div>
-            <div style={{ color: colors.text }}>{comment.text}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Comment form */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          style={{
-            background: colors.input,
-            border: `2px solid ${colors.border}`,
-            color: colors.text,
-            padding: '6px',
-            fontFamily: 'VT323, monospace',
-            fontSize: '14px'
-          }}
-        />
-        <textarea
-          placeholder="Write a comment..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          rows={3}
-          style={{
-            background: colors.input,
-            border: `2px solid ${colors.border}`,
-            color: colors.text,
-            padding: '6px',
-            fontFamily: 'VT323, monospace',
-            fontSize: '14px',
-            resize: 'vertical'
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            background: '#c0c0c0',
-            border: '2px solid',
-            borderColor: '#ffffff #808080 #808080 #ffffff',
-            padding: '6px 16px',
-            fontFamily: 'VT323, monospace',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            cursor: 'pointer',
-            alignSelf: 'flex-start'
-          }}
-        >
-          Post Comment
-        </button>
-      </form>
-    </div>
-  );
-}
 
 function Win95Window({ 
   id,
@@ -435,77 +308,6 @@ function SkillsContent() {
       <div className="border border-amber-600/50 bg-black/40 p-3 mt-4">
         <p className="text-xs text-amber-400 font-[VT323] text-center">
           {'>'} always learning, always breaking things, always fixing them again {'<'}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function ContactContent() {
-  const links = [
-    { icon: 'https://cdn.simpleicons.org/github/white', label: 'GitHub', url: 'https://github.com/oculink' },
-    { icon: 'https://cdn.simpleicons.org/x/white', label: 'Twitter/X', url: '#' },
-    { icon: 'https://cdn.simpleicons.org/discord/white', label: 'Discord', url: '#' },
-    { icon: 'https://cdn.simpleicons.org/gmail/white', label: 'Email', url: '#' },
-    { icon: 'https://cdn.simpleicons.org/firefox/white', label: 'Website', url: '#' },
-  ];
-
-  return (
-    <div className="space-y-5">
-      {/* Gothic header */}
-      <div className="text-center font-[VT323] text-red-400 text-lg">
-        SUMMONING RITUAL
-      </div>
-
-      {/* Marquee */}
-      <div className="border-2 border-red-800/50 bg-black/60 overflow-hidden py-2">
-        <div className="marquee-text text-red-400 font-[VT323] text-lg">
-          Reach out through the void. Contact me if you dare to discuss code, hardware, or the secrets of the digital realm
-        </div>
-      </div>
-
-      {/* Links grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {links.map((link, i) => (
-          <a
-            key={i}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex flex-col items-center gap-2 py-4 text-center border-2 border-red-800/50 bg-black/40 hover:bg-red-900/30 transition-all hover:shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:border-red-600"
-          >
-            <img src={link.icon} alt="" style={{ width: 24, height: 24, imageRendering: 'auto' }} />
-            <span className="text-base font-[VT323] text-red-300">{link.label}</span>
-          </a>
-        ))}
-      </div>
-
-      {/* Stream chat at bottom */}
-      <div className="border-2 border-red-800/50 bg-black/60 p-4 mt-5">
-        <div className="text-base text-red-400 font-bold mb-2 font-[VT323]">Dark Chat</div>
-        <div className="border-b border-red-900/30 pb-2 mb-2">
-          <span className="text-red-500 font-[VT323] text-base">demon_lord:</span>
-          <span className="text-red-300/70 font-[VT323] text-base"> nice page, very cursed</span>
-        </div>
-        <div className="border-b border-red-900/30 pb-2 mb-2">
-          <span className="text-purple-400 font-[VT323] text-base">femme_soule:</span>
-          <span className="text-red-300/70 font-[VT323] text-base"> surrender your soul to this aesthetic</span>
-        </div>
-        <div>
-          <span className="text-pink-400 font-[VT323] text-base">dark_angel:</span>
-          <span className="text-red-300/70 font-[VT323] text-base"> first!!</span>
-        </div>
-      </div>
-
-      {/* Footer message */}
-      <div className="text-center space-y-3">
-        <div className="flex items-center gap-2 justify-center opacity-60">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
-          <span className="text-red-400/60 text-sm font-[MedievalSharp]">fin</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
-        </div>
-        <p className="text-base text-red-400/60 font-[VT323]">
-          {new Date().getFullYear()} oculink | Forged in the fires of Arch Linux
         </p>
       </div>
     </div>
