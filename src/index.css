@@ -192,6 +192,168 @@ body {
   border-color: #808080 #ffffff #ffffff #808080;
 }
 
+/* Error Dialog Style - Classic Windows 95/98 */
+.error-dialog {
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  box-shadow: 
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #000000,
+    2px 2px 8px rgba(0, 0, 0, 0.5);
+  position: relative;
+  cursor: pointer;
+}
+
+.error-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-title-bar {
+  background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  padding: 3px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error-title-text {
+  color: white;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+
+.error-title-buttons {
+  display: flex;
+  gap: 2px;
+}
+
+.error-title-btn {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'VT323', monospace;
+  line-height: 1;
+  color: #000000;
+}
+
+.error-content-area {
+  padding: 20px;
+  background: #c0c0c0;
+}
+
+.error-message-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.error-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-icon-inner {
+  width: 40px;
+  height: 40px;
+  background: #ffff00;
+  border: 3px solid #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'VT323', monospace;
+  font-size: 32px;
+  font-weight: bold;
+  color: #000000;
+  box-shadow: 
+    inset 2px 2px 0 #ffffff,
+    inset -2px -2px 0 #808080;
+}
+
+.error-message-text {
+  flex: 1;
+  font-family: 'VT323', monospace;
+}
+
+.error-main-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.error-sub-text {
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 4px;
+}
+
+.error-status-text {
+  font-size: 16px;
+  color: #000080;
+  font-weight: bold;
+}
+
+.error-button-section {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 10px;
+  border-top: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.error-ok-btn,
+.error-cancel-btn {
+  min-width: 80px;
+  padding: 6px 20px;
+  background: #c0c0c0;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 
+    inset 1px 1px 0 #dfdfdf,
+    inset -1px -1px 0 #000000;
+}
+
+.error-ok-btn {
+  outline: 2px solid #000000;
+  outline-offset: -5px;
+}
+
+.error-ok-btn:hover,
+.error-cancel-btn:hover {
+  background: #d4d4d4;
+}
+
+.error-ok-btn:active,
+.error-cancel-btn:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: 
+    inset -1px -1px 0 #dfdfdf,
+    inset 1px 1px 0 #000000;
+}
+
 /* Window content - base */
 .window-content {
   padding: 16px;

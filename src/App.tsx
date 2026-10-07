@@ -32,17 +32,15 @@ function App() {
     <div className="main-bg scanlines">
       {/* Main Content Area - Vertical Stack */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
-        {/* Header / Banner */}
-        <Win95Window
+        {/* Header / Banner - Error Dialog Style */}
+        <div 
           id="header"
-          title="oculink"
-          theme="pink"
-          style={windowLayout.header}
-          zIndex={zIndex['header'] || 5}
-          onFocus={() => bringToFront('header')}
+          className="error-dialog"
+          style={{ ...windowLayout.header, zIndex: zIndex['header'] || 5 }}
+          onClick={() => bringToFront('header')}
         >
           <HeaderContent viewerCount={viewerCount} />
-        </Win95Window>
+        </div>
 
         {/* About Me - Dark Terminal */}
         <Win95Window
@@ -142,82 +140,40 @@ function Win95Window({
 
 function HeaderContent({ viewerCount }: { viewerCount: number }) {
   return (
-    <div className="relative text-center py-4 px-2">
-      {/* Stream UI elements */}
-      <div className="absolute top-2 right-2">
-        <span className="viewer-badge">
-          <span className="inline-block w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-          LIVE {viewerCount.toLocaleString()}
-        </span>
-      </div>
-
-      {/* Username */}
-      <h1 className="text-4xl md:text-6xl font-bold text-pink-500 mt-2 glitch-text font-[MedievalSharp]">
-        oculink
-      </h1>
-      
-      {/* Subtitle */}
-      <div className="mt-4 text-xl text-purple-300 font-[VT323] cursor-blink">
-        &gt; streaming code into existence_
-      </div>
-
-      {/* Decorative divider */}
-      <div className="gothic-divider mt-5">
-        <span className="text-pink-400/80 text-base font-[MedievalSharp]">internet angel</span>
-      </div>
-
-      {/* Tags */}
-      <div className="flex flex-wrap justify-center gap-3 mt-5">
-        {[
-          { text: 'Developer' },
-          { text: 'Arch Linux' },
-          { text: '7900 XTX' },
-          { text: '64GB DDR5' },
-        ].map((tag) => (
-          <span
-            key={tag.text}
-            className="px-4 py-2 text-base font-[VT323] bg-black/30 text-pink-300 border border-pink-500/40 rounded-full"
-          >
-            {tag.text}
-          </span>
-        ))}
-      </div>
-
-      {/* Game References Strip */}
-      <div className="flex justify-center gap-4 mt-4 items-end">
-        <div className="text-center">
-          <img 
-            src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
-            alt="KAngel - Needy Streamer Overload"
-            className="w-12 h-16 object-contain mx-auto"
-            style={{ imageRendering: 'pixelated', filter: 'drop-shadow(0 0 5px rgba(255,105,180,0.5))' }}
-          />
-          <div className="text-xs font-[VT323] text-pink-400/70 mt-1">NSO</div>
-        </div>
-        <div className="text-center">
-          <img 
-            src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4150720/9cac3280375ef488625362200f3167e4bee94ed5/ss_9cac3280375ef488625362200f3167e4bee94ed5.1920x1080.jpg?t=1778427552"
-            alt="Femme Soule - Drunken Goddess Reflux"
-            className="w-16 h-16 object-cover object-top rounded border border-red-900/50"
-            style={{ filter: 'drop-shadow(0 0 5px rgba(139,0,0,0.5))' }}
-          />
-          <div className="text-xs font-[VT323] text-red-400/70 mt-1">PGST</div>
+    <div className="error-dialog-content">
+      {/* Title bar */}
+      <div className="error-title-bar">
+        <span className="error-title-text">oculink.exe</span>
+        <div className="error-title-buttons">
+          <button className="error-title-btn">_</button>
+          <button className="error-title-btn">□</button>
+          <button className="error-title-btn">×</button>
         </div>
       </div>
 
-      {/* Stream chat preview */}
-      <div className="stream-chat mt-5 max-w-md mx-auto text-left">
-        <div className="chat-message">
-          <span className="chat-user">xX_dark_coder_Xx:</span>
-          <span className="text-gray-600"> nice setup!! is that a 7900 xtx??</span>
+      {/* Content area */}
+      <div className="error-content-area">
+        {/* Icon and message */}
+        <div className="error-message-section">
+          {/* Warning icon */}
+          <div className="error-icon">
+            <div className="error-icon-inner">
+              <span>!</span>
+            </div>
+          </div>
+
+          {/* Message text */}
+          <div className="error-message-text">
+            <p className="error-main-text">Welcome to oculink's system</p>
+            <p className="error-sub-text">Developer | Arch Linux | 7900 XTX | 64GB DDR5</p>
+            <p className="error-status-text">Status: Currently coding...</p>
+          </div>
         </div>
-        <div className="chat-message">
-          <span className="chat-user" style={{ color: '#6b3fa0' }}>archbtw_fan:</span>
-          <span className="text-gray-600"> btw</span>
-        </div>
-        <div className="chat-message">
-          <span className="chat-user" style={{ color: '#d63384' }}>demon_girl:</span>
-          <span className="text-gray-600"> 64gb of ram is overkill lol</span>
+
+        {/* Buttons */}
+        <div className="error-button-section">
+          <button className="error-ok-btn">OK</button>
+          <button className="error-cancel-btn">Cancel</button>
         </div>
       </div>
     </div>
