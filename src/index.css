@@ -729,6 +729,96 @@ body {
   color: #ff4444;
 }
 
+/* Webcam theme */
+.win95-window.theme-webcam {
+  background: #1a1a1a;
+  border-color: #333333 #000000 #000000 #333333;
+}
+
+.title-bar.theme-webcam {
+  background: linear-gradient(90deg, #0066cc 0%, #0099ff 50%, #0066cc 100%);
+}
+
+.window-content.theme-webcam {
+  background: #000000;
+  padding: 0;
+  border: 2px solid #333333;
+}
+
+/* Webcam container */
+.webcam-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.webcam-feed {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.webcam-gif {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: auto;
+}
+
+.webcam-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.webcam-rec {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #ff0000;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 2px 2px 0 #000;
+  animation: blink 1s infinite;
+}
+
+.webcam-timestamp {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #ffffff;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.webcam-info {
+  background: #1a1a1a;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #333333;
+}
+
+.webcam-name {
+  color: #00ff00;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.webcam-status {
+  color: #ffff00;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+}
+
 /* Inset field */
 .win95-inset {
   border: 2px solid;

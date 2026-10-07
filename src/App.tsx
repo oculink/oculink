@@ -27,9 +27,8 @@ function App() {
   // Window layout - side by side with inconsistent heights
   const windowLayout = useMemo(() => ({
     header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
-    about: { width: '30%', height: '400px', transform: 'rotate(0.4deg)' },
-    fastfetch: { width: '35%', height: '500px', transform: 'rotate(-0.5deg)' },
-    skills: { width: '30%', height: '450px', transform: 'rotate(0.3deg)' },
+    about: { width: '45%', height: '400px', transform: 'rotate(0.4deg)' },
+    fastfetch: { width: '50%', height: '500px', transform: 'rotate(-0.5deg)' },
   }), []);
 
   return (
@@ -77,16 +76,19 @@ function App() {
             <FastfetchContent />
           </Win95Window>
 
-          {/* Skills - Amber CRT */}
+        </div>
+
+        {/* Webcam Window - Qtie */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
           <Win95Window
-            id="skills"
-            title="C:\SKILLS.CONFIG"
-            theme="amber"
-            style={windowLayout.skills}
-            zIndex={zIndex['skills'] || 3}
-            onFocus={() => bringToFront('skills')}
+            id="webcam"
+            title="webcam.exe - LIVE"
+            theme="webcam"
+            style={{ width: 'min(320px, 90vw)' }}
+            zIndex={zIndex['webcam'] || 4}
+            onFocus={() => bringToFront('webcam')}
           >
-            <SkillsContent />
+            <WebcamContent />
           </Win95Window>
         </div>
       </div>
@@ -108,7 +110,7 @@ function Win95Window({
   id: string;
   title: string; 
   children: React.ReactNode; 
-  theme?: 'pink' | 'terminal' | 'dracula' | 'amber' | 'blood';
+  theme?: 'pink' | 'terminal' | 'dracula' | 'amber' | 'blood' | 'webcam';
   style?: React.CSSProperties;
   zIndex?: number;
   onFocus?: () => void;
@@ -264,51 +266,25 @@ function FastfetchContent() {
   );
 }
 
-function SkillsContent() {
-  const skills = [
-    { name: 'JavaScript / TypeScript', level: 90, icon: '>' },
-    { name: 'React / Next.js', level: 85, icon: '>' },
-    { name: 'Rust', level: 60, icon: '>' },
-    { name: 'Python', level: 75, icon: '>' },
-    { name: 'Linux / Arch', level: 92, icon: '>' },
-    { name: 'CSS / Tailwind', level: 88, icon: '>' },
-    { name: 'Node.js', level: 80, icon: '>' },
-    { name: 'WebGL / Graphics', level: 55, icon: '>' },
-  ];
 
+
+function WebcamContent() {
   return (
-    <div className="space-y-4">
-      <div className="text-center mb-6 font-[VT323] text-amber-400 text-lg">
-        ╔══════════════════════════╗<br/>
-        ║  SYSTEM SKILLS ANALYSIS  ║<br/>
-        ╚══════════════════════╝
-      </div>
-      
-      {skills.map((skill, i) => (
-        <div key={i} className="space-y-2">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <span className="text-amber-500 font-[VT323] text-lg">{skill.icon}</span>
-              <span className="text-lg font-[VT323] text-amber-300">{skill.name}</span>
-            </div>
-            <span className="text-base font-[VT323] text-amber-400">{skill.level}%</span>
-          </div>
-          <div className="h-5 bg-black/60 border border-amber-600/50 relative overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-1000"
-              style={{ width: `${skill.level}%`, boxShadow: '0 0 10px rgba(255, 176, 0, 0.5)' }}
-            />
-            {/* Scanline effect */}
-            <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.1)_2px,rgba(0,0,0,0.1)_4px)]" />
-          </div>
+    <div className="webcam-container">
+      <div className="webcam-feed">
+        <img 
+          src="https://media1.tenor.com/m/8Lwtg_zkbiQAAAAd/qtie-yunyun-syndrome.gif"
+          alt="Qtie webcam"
+          className="webcam-gif"
+        />
+        <div className="webcam-overlay">
+          <div className="webcam-rec">● REC</div>
+          <div className="webcam-timestamp">CAM 01</div>
         </div>
-      ))}
-      
-      {/* Decorative accent */}
-      <div className="border border-amber-600/50 bg-black/40 p-3 mt-4">
-        <p className="text-xs text-amber-400 font-[VT323] text-center">
-          {'>'} always learning, always breaking things, always fixing them again {'<'}
-        </p>
+      </div>
+      <div className="webcam-info">
+        <span className="webcam-name">qtie_yunyun</span>
+        <span className="webcam-status">streaming...</span>
       </div>
     </div>
   );
