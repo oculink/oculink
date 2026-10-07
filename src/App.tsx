@@ -34,18 +34,18 @@ function App() {
     setZIndex(prev => ({ ...prev, [id]: newZ }));
   };
 
-  // Window layout - stacked vertically with inconsistent heights
+  // Window layout - side by side with inconsistent heights
   const windowLayout = useMemo(() => ({
     header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
-    about: { width: 'min(600px, 90vw)', height: '500px', transform: 'rotate(0.4deg)', margin: '0 auto' },
-    fastfetch: { width: 'min(650px, 92vw)', height: '600px', transform: 'rotate(-0.5deg)', margin: '0 auto' },
+    about: { width: '45%', height: '500px', transform: 'rotate(0.4deg)' },
+    fastfetch: { width: '50%', height: '600px', transform: 'rotate(-0.5deg)' },
   }), []);
 
   // Mobile layout - stacked
   const mobileLayout = useMemo(() => ({
     header: { width: '100%', transform: 'none', margin: '0' },
-    about: { width: '100%', height: 'auto', minHeight: '500px', transform: 'none' },
-    fastfetch: { width: '100%', height: 'auto', minHeight: '600px', transform: 'none' },
+    about: { width: '100%', height: 'auto', minHeight: '500px', transform: 'none', margin: '0' },
+    fastfetch: { width: '100%', height: 'auto', minHeight: '600px', transform: 'none', margin: '0' },
   }), []);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -65,7 +65,7 @@ function App() {
       <div className="vhs-timestamp">PLAY ▶ {timestamp}</div>
       <div className="noise-overlay"></div>
 
-      {/* Main Content Area - Stacked Vertically */}
+      {/* Main Content Area */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '40px', padding: '60px 20px' }}>
         {/* Header */}
         <div 
@@ -88,33 +88,36 @@ function App() {
           <HeaderContent />
         </div>
 
-        {/* About Me - Dark Terminal */}
-        <Win95Window
-          id="about"
-          title="~/about_me.txt"
-          theme="terminal"
-          style={{ ...currentLayout.about, opacity: windowOpacities.about }}
-          zIndex={zIndex['about'] || 6}
-          onFocus={() => bringToFront('about')}
-          opacitySlider={windowOpacities.about}
-          onOpacityChange={(val) => setWindowOpacity('about', val)}
-        >
-          <AboutMeContent />
-        </Win95Window>
+        {/* Windows Row - Side by Side */}
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'flex-start' }}>
+          {/* About Me - Dark Terminal */}
+          <Win95Window
+            id="about"
+            title="~/about_me.txt"
+            theme="terminal"
+            style={{ ...currentLayout.about, opacity: windowOpacities.about }}
+            zIndex={zIndex['about'] || 6}
+            onFocus={() => bringToFront('about')}
+            opacitySlider={windowOpacities.about}
+            onOpacityChange={(val) => setWindowOpacity('about', val)}
+          >
+            <AboutMeContent />
+          </Win95Window>
 
-        {/* Fastfetch - Dracula */}
-        <Win95Window
-          id="fastfetch"
-          title="oculink@archlinux: ~"
-          theme="dracula"
-          style={{ ...currentLayout.fastfetch, opacity: windowOpacities.fastfetch }}
-          zIndex={zIndex['fastfetch'] || 8}
-          onFocus={() => bringToFront('fastfetch')}
-          opacitySlider={windowOpacities.fastfetch}
-          onOpacityChange={(val) => setWindowOpacity('fastfetch', val)}
-        >
-          <FastfetchContent />
-        </Win95Window>
+          {/* Fastfetch - Dracula */}
+          <Win95Window
+            id="fastfetch"
+            title="oculink@archlinux: ~"
+            theme="dracula"
+            style={{ ...currentLayout.fastfetch, opacity: windowOpacities.fastfetch }}
+            zIndex={zIndex['fastfetch'] || 8}
+            onFocus={() => bringToFront('fastfetch')}
+            opacitySlider={windowOpacities.fastfetch}
+            onOpacityChange={(val) => setWindowOpacity('fastfetch', val)}
+          >
+            <FastfetchContent />
+          </Win95Window>
+        </div>
 
       </div>
 

@@ -1192,6 +1192,10 @@ body {
     gap: 30px !important;
   }
 
+  .desktop-area > div[style*="flex"] {
+    flex-direction: column !important;
+  }
+
   .error-dialog {
     width: 100% !important;
     margin: 0 !important;
