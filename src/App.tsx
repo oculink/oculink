@@ -5,7 +5,11 @@ function App() {
   const [highestZ, setHighestZ] = useState(10);
   const [timestamp, setTimestamp] = useState('00:00:00');
   const [webcamOpacity, setWebcamOpacity] = useState(0.7);
-  const [scrollY, setScrollY] = useState(0);
+  const [windowOpacities, setWindowOpacities] = useState<Record<string, number>>({
+    header: 1,
+    about: 1,
+    fastfetch: 1,
+  });
 
   // VHS timestamp counter
   useEffect(() => {
@@ -20,20 +24,8 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  // Track scroll position
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Calculate window opacity based on scroll
-  const getWindowOpacity = (index: number) => {
-    const fadeStart = index * 300;
-    const fadeEnd = fadeStart + 500;
-    if (scrollY < fadeStart) return 1;
-    if (scrollY > fadeEnd) return 0.4;
-    return 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart) * 0.6;
+  const setWindowOpacity = (id: string, value: number) => {
+    setWindowOpacities(prev => ({ ...prev, [id]: value }));
   };
 
   const bringToFront = (id: string) => {
@@ -79,9 +71,20 @@ function App() {
         <div 
           id="header"
           className="error-dialog"
-          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5, opacity: getWindowOpacity(0) }}
+          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5, opacity: windowOpacities.header }}
           onClick={() => bringToFront('header')}
         >
+          <div className="window-opacity-slider">
+            <input
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.1"
+              value={windowOpacities.header}
+              onChange={(e) => setWindowOpacity('header', parseFloat(e.target.value))}
+              className="window-slider"
+            />
+          </div>
           <HeaderContent />
         </div>
 
@@ -90,9 +93,11 @@ function App() {
           id="about"
           title="~/about_me.txt"
           theme="terminal"
-          style={{ ...currentLayout.about, opacity: getWindowOpacity(1) }}
+          style={{ ...currentLayout.about, opacity: windowOpacities.about }}
           zIndex={zIndex['about'] || 6}
           onFocus={() => bringToFront('about')}
+          opacitySlider={windowOpacities.about}
+          onOpacityChange={(val) => setWindowOpacity('about', val)}
         >
           <AboutMeContent />
         </Win95Window>
@@ -102,9 +107,11 @@ function App() {
           id="fastfetch"
           title="oculink@archlinux: ~"
           theme="dracula"
-          style={{ ...currentLayout.fastfetch, opacity: getWindowOpacity(2) }}
+          style={{ ...currentLayout.fastfetch, opacity: windowOpacities.fastfetch }}
           zIndex={zIndex['fastfetch'] || 8}
           onFocus={() => bringToFront('fastfetch')}
+          opacitySlider={windowOpacities.fastfetch}
+          onOpacityChange={(val) => setWindowOpacity('fastfetch', val)}
         >
           <FastfetchContent />
         </Win95Window>
@@ -151,7 +158,9 @@ function Win95Window({
   theme = 'pink',
   style,
   zIndex = 1,
-  onFocus 
+  onFocus,
+  opacitySlider,
+  onOpacityChange
 }: { 
   id: string;
   title: string; 
@@ -160,6 +169,8 @@ function Win95Window({
   style?: React.CSSProperties;
   zIndex?: number;
   onFocus?: () => void;
+  opacitySlider?: number;
+  onOpacityChange?: (value: number) => void;
 }) {
   return (
     <div 
@@ -168,6 +179,19 @@ function Win95Window({
       style={{ ...style, zIndex }}
       onClick={onFocus}
     >
+      {opacitySlider !== undefined && onOpacityChange && (
+        <div className="window-opacity-slider">
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.1"
+            value={opacitySlider}
+            onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
+            className="window-slider"
+          />
+        </div>
+      )}
       <div className={`title-bar theme-${theme}`}>
         <span className="title-bar-text">
           {title}
