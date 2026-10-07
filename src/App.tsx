@@ -36,6 +36,39 @@ function App() {
       {/* Character Sprites */}
       <CharacterSprites />
 
+      {/* NSO-style Sidebar - right side */}
+      <div className="fixed top-20 right-20 z-30 hidden lg:block pointer-events-none">
+        <div className="w-32 bg-gradient-to-b from-pink-200/80 to-purple-300/80 border-2 border-pink-400 rounded-lg p-2 backdrop-blur-sm">
+          <div className="text-center text-xs font-[VT323] text-pink-700 font-bold mb-1">♡ NSO SIDEBAR ♡</div>
+          <div className="space-y-1">
+            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
+              <span className="text-pink-600">FOLLOWERS</span>
+              <br />
+              <span className="text-lg text-purple-700">666K</span>
+            </div>
+            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
+              <span className="text-pink-600">STRESS</span>
+              <br />
+              <span className="text-lg text-red-600">HIGH</span>
+            </div>
+            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
+              <span className="text-pink-600">MENTAL</span>
+              <br />
+              <span className="text-lg text-yellow-600">???</span>
+            </div>
+          </div>
+          {/* Small KAngel face */}
+          <div className="mt-2 flex justify-center">
+            <img 
+              src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
+              alt="kangel"
+              className="w-10 h-14 object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Main Content Area - Scattered Windows */}
       <div className="desktop-area">
         {/* Header / Banner */}
@@ -133,6 +166,26 @@ function FloatingDecorations() {
           {d.symbol}
         </div>
       ))}
+
+      {/* NSO Tutorial Cat - top right corner */}
+      <div className="fixed top-20 right-4 z-30 pointer-events-none hidden md:block opacity-60">
+        <img 
+          src="https://www.spriters-resource.com/media/assets/198/201023.png?updated=1755488925"
+          alt="tutorial cat"
+          className="w-16 h-16 object-contain"
+          style={{ imageRendering: 'pixelated' }}
+        />
+      </div>
+
+      {/* NSO Hearts decoration - scattered */}
+      <div className="fixed top-40 left-20 z-30 pointer-events-none hidden md:block opacity-40">
+        <img 
+          src="https://www.spriters-resource.com/media/assets/198/200970.png?updated=1755488923"
+          alt="hearts"
+          className="w-20 h-20 object-contain"
+          style={{ imageRendering: 'pixelated' }}
+        />
+      </div>
     </>
   );
 }
@@ -140,30 +193,36 @@ function FloatingDecorations() {
 function CharacterSprites() {
   return (
     <>
-      {/* Demon girl sprite - right side */}
+      {/* Femme Soule - Drunken Goddess Reflux / PUKEY GODDESS SHOT TRICK - right side */}
       <div 
-        className="fixed bottom-10 right-4 z-40 pointer-events-none hidden md:block"
+        className="fixed bottom-10 right-2 z-40 pointer-events-none hidden md:block"
+        style={{ filter: 'drop-shadow(0 0 15px rgba(139, 0, 0, 0.6))' }}
+      >
+        <img 
+          src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4150720/c6067e139d8dd2cbf79c41a9c4e41e3bb088c95a/ss_c6067e139d8dd2cbf79c41a9c4e41e3bb088c95a.1920x1080.jpg?t=1778427552"
+          alt="Femme Soule - Drunken Goddess Reflux"
+          className="w-56 h-72 object-cover object-top rounded-lg border-2 border-red-900/50 opacity-70"
+          style={{ imageRendering: 'auto' }}
+        />
+        <div className="text-center mt-1 text-xs font-[VT323] text-red-400/60">
+          Femme Soule
+        </div>
+      </div>
+      
+      {/* KAngel Dark Angel - Needy Streamer Overload - left side */}
+      <div 
+        className="fixed bottom-10 left-2 z-40 pointer-events-none hidden md:block"
         style={{ filter: 'drop-shadow(0 0 15px rgba(255, 105, 180, 0.6))' }}
       >
         <img 
-          src="https://image.qwenlm.ai/generated-images/4befd224-f2d9-44e7-a38a-d545cac10bb9/_result.png"
-          alt="demon girl"
-          className="w-40 h-40 object-contain character-sprite opacity-80"
-          style={{ imageRendering: 'auto' }}
+          src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
+          alt="KAngel Dark Angel - Needy Streamer Overload"
+          className="w-36 h-52 object-contain character-sprite opacity-80"
+          style={{ imageRendering: 'pixelated' }}
         />
-      </div>
-      
-      {/* Streamer girl sprite - left side */}
-      <div 
-        className="fixed bottom-10 left-4 z-40 pointer-events-none hidden md:block"
-        style={{ filter: 'drop-shadow(0 0 15px rgba(176, 224, 255, 0.6))' }}
-      >
-        <img 
-          src="https://image.qwenlm.ai/generated-images/b6e2cb70-3f50-49d4-9925-8484cd156cc1/_result.png"
-          alt="streamer girl"
-          className="w-36 h-36 object-contain character-sprite opacity-80"
-          style={{ imageRendering: 'auto' }}
-        />
+        <div className="text-center mt-1 text-xs font-[VT323] text-pink-400/60">
+          KAngel
+        </div>
       </div>
     </>
   );
@@ -253,6 +312,28 @@ function HeaderContent({ viewerCount }: { viewerCount: number }) {
             {tag.icon} {tag.text}
           </span>
         ))}
+      </div>
+
+      {/* Game References Strip */}
+      <div className="flex justify-center gap-4 mt-4 items-end">
+        <div className="text-center">
+          <img 
+            src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
+            alt="KAngel - Needy Streamer Overload"
+            className="w-12 h-16 object-contain mx-auto"
+            style={{ imageRendering: 'pixelated', filter: 'drop-shadow(0 0 5px rgba(255,105,180,0.5))' }}
+          />
+          <div className="text-xs font-[VT323] text-pink-400/70 mt-1">NSO</div>
+        </div>
+        <div className="text-center">
+          <img 
+            src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4150720/9cac3280375ef488625362200f3167e4bee94ed5/ss_9cac3280375ef488625362200f3167e4bee94ed5.1920x1080.jpg?t=1778427552"
+            alt="Femme Soule - Drunken Goddess Reflux"
+            className="w-16 h-16 object-cover object-top rounded border border-red-900/50"
+            style={{ filter: 'drop-shadow(0 0 5px rgba(139,0,0,0.5))' }}
+          />
+          <div className="text-xs font-[VT323] text-red-400/70 mt-1">PGST</div>
+        </div>
       </div>
 
       {/* Stream chat preview */}
