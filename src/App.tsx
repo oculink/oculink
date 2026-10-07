@@ -257,19 +257,27 @@ function HeaderContent() {
         {/* Social buttons */}
         <div className="social-buttons">
           <a href="https://github.com/oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
-            <img src="https://cdn.simpleicons.org/github/white" alt="GitHub" className="social-icon" />
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg" alt="GitHub" className="social-icon" />
             <span>GitHub</span>
           </a>
           <a href="https://steamcommunity.com/id/oculink/" target="_blank" rel="noopener noreferrer" className="social-btn">
-            <img src="https://cdn.simpleicons.org/steam/white" alt="Steam" className="social-icon" />
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/steam.svg" alt="Steam" className="social-icon" />
             <span>Steam</span>
           </a>
           <a href="https://www.tiktok.com/@oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
-            <img src="https://cdn.simpleicons.org/tiktok/white" alt="TikTok" className="social-icon" />
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg" alt="TikTok" className="social-icon" />
             <span>TikTok</span>
           </a>
+          <a href="https://www.youtube.com/@ocu-link" target="_blank" rel="noopener noreferrer" className="social-btn">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/youtube.svg" alt="YouTube" className="social-icon" />
+            <span>YouTube</span>
+          </a>
+          <a href="https://www.twitch.tv/oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/twitch.svg" alt="Twitch" className="social-icon" />
+            <span>Twitch</span>
+          </a>
           <button onClick={handleEmailClick} className="social-btn">
-            <img src="https://cdn.simpleicons.org/protonmail/white" alt="Email" className="social-icon" />
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/protonmail.svg" alt="Email" className="social-icon" />
             <span>Email</span>
           </button>
         </div>
