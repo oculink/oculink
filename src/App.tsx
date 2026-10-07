@@ -67,13 +67,8 @@ function App() {
 
       {/* Main Content Area */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '40px', padding: '60px 20px' }}>
-        {/* Header */}
-        <div 
-          id="header"
-          className="error-dialog"
-          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5, opacity: windowOpacities.header }}
-          onClick={() => bringToFront('header')}
-        >
+        {/* Header - wrapper with slider outside opacity */}
+        <div className="window-wrapper" style={{ ...currentLayout.header, position: 'relative' }}>
           <div className="window-opacity-slider">
             <input
               type="range"
@@ -82,41 +77,70 @@ function App() {
               step="0.1"
               value={windowOpacities.header}
               onChange={(e) => setWindowOpacity('header', parseFloat(e.target.value))}
-              className="window-slider"
+              className="window-slider slider-header"
             />
           </div>
-          <HeaderContent />
+          <div 
+            id="header"
+            className="error-dialog"
+            style={{ zIndex: zIndex['header'] || 5, opacity: windowOpacities.header, width: '100%' }}
+            onClick={() => bringToFront('header')}
+          >
+            <HeaderContent />
+          </div>
         </div>
 
         {/* Windows Row - Side by Side */}
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'flex-start' }}>
           {/* About Me - Dark Terminal */}
-          <Win95Window
-            id="about"
-            title="~/about_me.txt"
-            theme="terminal"
-            style={{ ...currentLayout.about, opacity: windowOpacities.about }}
-            zIndex={zIndex['about'] || 6}
-            onFocus={() => bringToFront('about')}
-            opacitySlider={windowOpacities.about}
-            onOpacityChange={(val) => setWindowOpacity('about', val)}
-          >
-            <AboutMeContent />
-          </Win95Window>
+          <div className="window-wrapper" style={{ ...currentLayout.about, position: 'relative' }}>
+            <div className="window-opacity-slider">
+              <input
+                type="range"
+                min="0.1"
+                max="1"
+                step="0.1"
+                value={windowOpacities.about}
+                onChange={(e) => setWindowOpacity('about', parseFloat(e.target.value))}
+                className="window-slider slider-about"
+              />
+            </div>
+            <Win95Window
+              id="about"
+              title="~/about_me.txt"
+              theme="terminal"
+              style={{ opacity: windowOpacities.about, width: '100%', height: '100%' }}
+              zIndex={zIndex['about'] || 6}
+              onFocus={() => bringToFront('about')}
+            >
+              <AboutMeContent />
+            </Win95Window>
+          </div>
 
           {/* Fastfetch - Dracula */}
-          <Win95Window
-            id="fastfetch"
-            title="oculink@archlinux: ~"
-            theme="dracula"
-            style={{ ...currentLayout.fastfetch, opacity: windowOpacities.fastfetch }}
-            zIndex={zIndex['fastfetch'] || 8}
-            onFocus={() => bringToFront('fastfetch')}
-            opacitySlider={windowOpacities.fastfetch}
-            onOpacityChange={(val) => setWindowOpacity('fastfetch', val)}
-          >
-            <FastfetchContent />
-          </Win95Window>
+          <div className="window-wrapper" style={{ ...currentLayout.fastfetch, position: 'relative' }}>
+            <div className="window-opacity-slider">
+              <input
+                type="range"
+                min="0.1"
+                max="1"
+                step="0.1"
+                value={windowOpacities.fastfetch}
+                onChange={(e) => setWindowOpacity('fastfetch', parseFloat(e.target.value))}
+                className="window-slider slider-fastfetch"
+              />
+            </div>
+            <Win95Window
+              id="fastfetch"
+              title="oculink@archlinux: ~"
+              theme="dracula"
+              style={{ opacity: windowOpacities.fastfetch, width: '100%', height: '100%' }}
+              zIndex={zIndex['fastfetch'] || 8}
+              onFocus={() => bringToFront('fastfetch')}
+            >
+              <FastfetchContent />
+            </Win95Window>
+          </div>
         </div>
 
       </div>
@@ -161,9 +185,7 @@ function Win95Window({
   theme = 'pink',
   style,
   zIndex = 1,
-  onFocus,
-  opacitySlider,
-  onOpacityChange
+  onFocus
 }: { 
   id: string;
   title: string; 
@@ -172,8 +194,6 @@ function Win95Window({
   style?: React.CSSProperties;
   zIndex?: number;
   onFocus?: () => void;
-  opacitySlider?: number;
-  onOpacityChange?: (value: number) => void;
 }) {
   return (
     <div 
@@ -182,19 +202,6 @@ function Win95Window({
       style={{ ...style, zIndex }}
       onClick={onFocus}
     >
-      {opacitySlider !== undefined && onOpacityChange && (
-        <div className="window-opacity-slider">
-          <input
-            type="range"
-            min="0.1"
-            max="1"
-            step="0.1"
-            value={opacitySlider}
-            onChange={(e) => onOpacityChange(parseFloat(e.target.value))}
-            className="window-slider"
-          />
-        </div>
-      )}
       <div className={`title-bar theme-${theme}`}>
         <span className="title-bar-text">
           {title}
