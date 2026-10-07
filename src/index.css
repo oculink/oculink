@@ -733,7 +733,7 @@ body {
 /* Window Opacity Slider */
 .window-opacity-slider {
   position: absolute;
-  top: -16px;
+  top: -24px;
   left: 0;
   right: 0;
   padding: 0 10px;
