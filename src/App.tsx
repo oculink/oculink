@@ -326,18 +326,10 @@ function AboutMeContent() {
       <div className="border-2 border-cyan-400/30 bg-black/40 p-4 backdrop-blur-sm">
         <table className="w-full text-lg font-[VT323]">
           <tbody>
-            <tr><td className="pr-4 text-green-400 font-bold">OS:</td><td className="text-cyan-200">Arch Linux (btw)</td></tr>
             <tr><td className="pr-4 text-green-400 font-bold">CPU:</td><td className="text-cyan-200">Ryzen 7 8845HS</td></tr>
-            <tr><td className="pr-4 text-green-400 font-bold">GPU:</td><td className="text-cyan-200">RX 7900 XTX</td></tr>
             <tr><td className="pr-4 text-green-400 font-bold">RAM:</td><td className="text-cyan-200">64GB DDR5 5600MHz</td></tr>
-            <tr><td className="pr-4 text-green-400 font-bold">Status:</td><td className="text-green-400">● Currently coding</td></tr>
           </tbody>
         </table>
-      </div>
-
-      {/* Decorative accent */}
-      <div className="text-center text-cyan-400/60 text-xs font-[MedievalSharp]">
-        ⚡ the machine is an extension of the mind ⚡
       </div>
     </div>
   );
