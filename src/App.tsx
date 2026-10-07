@@ -78,18 +78,22 @@ function App() {
 
         </div>
 
-        {/* Webcam Window - Qtie */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '40px' }}>
-          <Win95Window
-            id="webcam"
-            title="webcam.exe - LIVE"
-            theme="webcam"
-            style={{ width: 'min(320px, 90vw)' }}
-            zIndex={zIndex['webcam'] || 4}
-            onFocus={() => bringToFront('webcam')}
-          >
-            <WebcamContent />
-          </Win95Window>
+      </div>
+
+      {/* Floating Webcam Overlay - Qtie */}
+      <div className="webcam-overlay-fixed">
+        <div className="webcam-rgb-frame">
+          <div className="webcam-inner">
+            <img 
+              src="https://media1.tenor.com/m/DTD6MHUBbdQAAAAC/yunyun-yunyun-syndrome-rythm-psychosis.gif"
+              alt="Qtie"
+              className="webcam-gif"
+            />
+            <div className="webcam-overlay-effects">
+              <div className="webcam-rec">● REC</div>
+              <div className="webcam-timestamp">CAM 01</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -267,27 +271,5 @@ function FastfetchContent() {
 }
 
 
-
-function WebcamContent() {
-  return (
-    <div className="webcam-container">
-      <div className="webcam-feed">
-        <img 
-          src="https://media1.tenor.com/m/8Lwtg_zkbiQAAAAd/qtie-yunyun-syndrome.gif"
-          alt="Qtie webcam"
-          className="webcam-gif"
-        />
-        <div className="webcam-overlay">
-          <div className="webcam-rec">● REC</div>
-          <div className="webcam-timestamp">CAM 01</div>
-        </div>
-      </div>
-      <div className="webcam-info">
-        <span className="webcam-name">qtie_yunyun</span>
-        <span className="webcam-status">streaming...</span>
-      </div>
-    </div>
-  );
-}
 
 export default App;

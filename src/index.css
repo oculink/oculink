@@ -729,44 +729,42 @@ body {
   color: #ff4444;
 }
 
-/* Webcam theme */
-.win95-window.theme-webcam {
-  background: #1a1a1a;
-  border-color: #333333 #000000 #000000 #333333;
+/* Floating Webcam Overlay */
+.webcam-overlay-fixed {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
-.title-bar.theme-webcam {
-  background: linear-gradient(90deg, #0066cc 0%, #0099ff 50%, #0066cc 100%);
-}
-
-.window-content.theme-webcam {
-  background: #000000;
-  padding: 0;
-  border: 2px solid #333333;
-}
-
-/* Webcam container */
-.webcam-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.webcam-feed {
+.webcam-rgb-frame {
   position: relative;
-  width: 100%;
-  overflow: hidden;
+  padding: 4px;
+  background: linear-gradient(45deg, #ff0000, #ff00ff, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);
+  background-size: 400% 400%;
+  animation: rgb-border 3s linear infinite;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+
+.webcam-inner {
+  position: relative;
   background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 240px;
+  height: 240px;
 }
 
 .webcam-gif {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  image-rendering: auto;
 }
 
-.webcam-overlay {
+.webcam-overlay-effects {
   position: absolute;
   top: 0;
   left: 0;
@@ -777,46 +775,33 @@ body {
 
 .webcam-rec {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 8px;
+  left: 8px;
   color: #ff0000;
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  text-shadow: 2px 2px 0 #000;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
   animation: blink 1s infinite;
 }
 
 .webcam-timestamp {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 8px;
+  right: 8px;
   color: #ffffff;
   font-family: 'VT323', monospace;
-  font-size: 14px;
-  text-shadow: 2px 2px 0 #000;
+  font-size: 12px;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000;
 }
 
-.webcam-info {
-  background: #1a1a1a;
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #333333;
-}
-
-.webcam-name {
-  color: #00ff00;
-  font-family: 'VT323', monospace;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.webcam-status {
-  color: #ffff00;
-  font-family: 'VT323', monospace;
-  font-size: 14px;
+@keyframes rgb-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 400% 50%;
+  }
 }
 
 /* Inset field */
