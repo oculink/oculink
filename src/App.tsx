@@ -64,6 +64,7 @@ function App() {
       <div className="vhs-rec">REC</div>
       <div className="vhs-timestamp">PLAY ▶ {timestamp}</div>
       <div className="noise-overlay"></div>
+      <div className="vhs-intense-overlay"></div>
 
       {/* Main Content Area */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '40px', padding: '60px 20px' }}>

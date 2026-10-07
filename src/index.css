@@ -137,7 +137,7 @@ body {
 .vhs-timestamp {
   position: fixed;
   bottom: 60px;
-  right: 20px;
+  left: 20px;
   font-family: 'VT323', monospace;
   font-size: 18px;
   color: #ffffff;
@@ -203,6 +203,109 @@ body {
   pointer-events: none;
   z-index: 9996;
   mix-blend-mode: overlay;
+}
+
+/* Intense VHS Overlay */
+.vhs-intense-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9995;
+  mix-blend-mode: screen;
+  animation: vhs-glitch-shift 0.3s infinite;
+}
+
+.vhs-intense-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 0, 0, 0.03) 0px,
+      rgba(255, 0, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 0, 0.02) 0px,
+      rgba(0, 255, 0, 0.02) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 255, 0.03) 0px,
+      rgba(0, 0, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  animation: vhs-chromatic 0.1s infinite;
+}
+
+.vhs-intense-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(
+      transparent 0%,
+      transparent 45%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 55%,
+      transparent 100%
+    );
+  animation: vhs-tracking-bar 4s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes vhs-glitch-shift {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-2px);
+  }
+  20% {
+    transform: translateX(1px);
+  }
+  30% {
+    transform: translateX(0);
+  }
+  60% {
+    transform: translateX(3px);
+  }
+  70% {
+    transform: translateX(-1px);
+  }
+  80% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes vhs-chromatic {
+  0%, 100% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  25% {
+    background-position: 2px 0, -1px 0, 1px 0;
+  }
+  50% {
+    background-position: -1px 0, 2px 0, -2px 0;
+  }
+  75% {
+    background-position: 1px 0, -2px 0, 2px 0;
+  }
+}
+
+@keyframes vhs-tracking-bar {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 /* Vertical stack layout */
