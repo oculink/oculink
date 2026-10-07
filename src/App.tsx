@@ -19,13 +19,13 @@ function App() {
     setZIndex(prev => ({ ...prev, [id]: newZ }));
   };
 
-  // Window layout - scattered, overlapping, slightly rotated
+  // Window layout - vertical stack with slight rotations, no overlap
   const windowLayout = useMemo(() => ({
-    header: { top: '20px', left: '50%', transform: 'translateX(-50%) rotate(-0.5deg)', width: 'min(650px, 92vw)' },
-    about: { top: '260px', left: '2%', width: 'min(440px, 48vw)', transform: 'rotate(-0.8deg)' },
-    fastfetch: { top: '180px', left: '38%', width: 'min(460px, 50vw)', transform: 'rotate(0.5deg)' },
-    skills: { top: '500px', left: '50%', width: 'min(380px, 42vw)', transform: 'rotate(-0.4deg)' },
-    contact: { top: '700px', left: '10%', width: 'min(520px, 58vw)', transform: 'rotate(0.3deg)' },
+    header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
+    about: { width: 'min(500px, 92vw)', transform: 'rotate(0.4deg)', marginLeft: '5%' },
+    fastfetch: { width: 'min(520px, 92vw)', transform: 'rotate(-0.5deg)', marginLeft: 'auto', marginRight: '3%' },
+    skills: { width: 'min(480px, 92vw)', transform: 'rotate(0.3deg)', marginLeft: '8%' },
+    contact: { width: 'min(600px, 94vw)', transform: 'rotate(-0.2deg)', margin: '0 auto' },
   }), []);
 
   return (
@@ -36,57 +36,32 @@ function App() {
       {/* Character Sprites */}
       <CharacterSprites />
 
-      {/* NSO-style Sidebar - right side */}
-      <div className="fixed top-20 right-20 z-30 hidden lg:block pointer-events-none">
-        <div className="w-32 bg-gradient-to-b from-pink-200/80 to-purple-300/80 border-2 border-pink-400 rounded-lg p-2 backdrop-blur-sm">
-          <div className="text-center text-xs font-[VT323] text-pink-700 font-bold mb-1">♡ NSO SIDEBAR ♡</div>
-          <div className="space-y-1">
-            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
-              <span className="text-pink-600">FOLLOWERS</span>
-              <br />
-              <span className="text-lg text-purple-700">666K</span>
-            </div>
-            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
-              <span className="text-pink-600">STRESS</span>
-              <br />
-              <span className="text-lg text-red-600">HIGH</span>
-            </div>
-            <div className="bg-white/60 rounded p-1 text-xs font-[VT323] text-center">
-              <span className="text-pink-600">MENTAL</span>
-              <br />
-              <span className="text-lg text-yellow-600">???</span>
-            </div>
-          </div>
-          {/* Small KAngel face */}
-          <div className="mt-2 flex justify-center">
-            <img 
-              src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
-              alt="kangel"
-              className="w-10 h-14 object-contain"
-              style={{ imageRendering: 'pixelated' }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Area - Scattered Windows */}
-      <div className="desktop-area">
-        {/* Header / Banner */}
+      {/* Main Content Area - Vertical Stack */}
+      <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '60px', padding: '40px 20px' }}>
+        {/* Header / Banner - Pink Gothic */}
         <Win95Window
           id="header"
           title="♡ omgkawaiiangel ♡"
+          theme="pink"
           style={windowLayout.header}
           zIndex={zIndex['header'] || 5}
           onFocus={() => bringToFront('header')}
-          isGothic
         >
           <HeaderContent viewerCount={viewerCount} />
         </Win95Window>
 
-        {/* About Me */}
+        {/* Decorative divider */}
+        <div className="flex items-center gap-4 opacity-40">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
+          <span className="text-pink-400 text-2xl">♡</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
+        </div>
+
+        {/* About Me - Dark Terminal */}
         <Win95Window
           id="about"
-          title="about_me.txt"
+          title="~/about_me.txt"
+          theme="terminal"
           style={windowLayout.about}
           zIndex={zIndex['about'] || 6}
           onFocus={() => bringToFront('about')}
@@ -94,22 +69,37 @@ function App() {
           <AboutMeContent />
         </Win95Window>
 
-        {/* Fastfetch */}
+        {/* Decorative divider */}
+        <div className="flex items-center gap-4 opacity-40">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+          <span className="text-cyan-400 text-2xl">⚡</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
+        </div>
+
+        {/* Fastfetch - Dracula */}
         <Win95Window
           id="fastfetch"
           title="oculink@archlinux: ~"
+          theme="dracula"
           style={windowLayout.fastfetch}
           zIndex={zIndex['fastfetch'] || 8}
           onFocus={() => bringToFront('fastfetch')}
-          isTerminal
         >
           <FastfetchContent />
         </Win95Window>
 
-        {/* Skills */}
+        {/* Decorative divider */}
+        <div className="flex items-center gap-4 opacity-40">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+          <span className="text-purple-400 text-2xl">✧</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
+        </div>
+
+        {/* Skills - Amber CRT */}
         <Win95Window
           id="skills"
-          title="skills.config"
+          title="C:\SKILLS.CONFIG"
+          theme="amber"
           style={windowLayout.skills}
           zIndex={zIndex['skills'] || 3}
           onFocus={() => bringToFront('skills')}
@@ -117,16 +107,31 @@ function App() {
           <SkillsContent />
         </Win95Window>
 
-        {/* Contact */}
+        {/* Decorative divider */}
+        <div className="flex items-center gap-4 opacity-40">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+          <span className="text-amber-400 text-2xl">{'>'}</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
+        </div>
+
+        {/* Contact - Blood Red Gothic */}
         <Win95Window
           id="contact"
-          title="contact.html"
+          title="⛧ CONTACT.SYS ⛧"
+          theme="blood"
           style={windowLayout.contact}
           zIndex={zIndex['contact'] || 2}
           onFocus={() => bringToFront('contact')}
         >
           <ContactContent />
         </Win95Window>
+
+        {/* Final decorative divider */}
+        <div className="flex items-center gap-4 opacity-40">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-400 to-transparent"></div>
+          <span className="text-red-400 text-2xl">⛧</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-400 to-transparent"></div>
+        </div>
       </div>
     </div>
   );
@@ -232,8 +237,7 @@ function Win95Window({
   id,
   title, 
   children, 
-  isGothic = false, 
-  isTerminal = false,
+  theme = 'pink',
   style,
   zIndex = 1,
   onFocus 
@@ -241,8 +245,7 @@ function Win95Window({
   id: string;
   title: string; 
   children: React.ReactNode; 
-  isGothic?: boolean;
-  isTerminal?: boolean;
+  theme?: 'pink' | 'terminal' | 'dracula' | 'amber' | 'blood';
   style?: React.CSSProperties;
   zIndex?: number;
   onFocus?: () => void;
@@ -250,11 +253,11 @@ function Win95Window({
   return (
     <div 
       id={id}
-      className="win95-window"
+      className={`win95-window theme-${theme}`}
       style={{ ...style, zIndex }}
       onClick={onFocus}
     >
-      <div className={`title-bar ${isGothic ? 'title-bar-gothic' : ''}`}>
+      <div className={`title-bar theme-${theme}`}>
         <span className="title-bar-text">
           {title}
         </span>
@@ -264,7 +267,7 @@ function Win95Window({
           <button className="title-btn">×</button>
         </div>
       </div>
-      <div className="window-content" style={isTerminal ? { padding: 0, background: '#0c0c0c' } : {}}>
+      <div className={`window-content theme-${theme}`}>
         {children}
       </div>
     </div>
@@ -361,28 +364,28 @@ function AboutMeContent() {
       {/* Profile section */}
       <div className="flex items-start gap-4">
         {/* Avatar */}
-        <div className="w-20 h-20 win95-inset flex items-center justify-center bg-gradient-to-br from-pink-300 to-purple-400 flex-shrink-0 overflow-hidden">
+        <div className="w-20 h-20 border-2 border-cyan-400/50 flex items-center justify-center bg-black/50 flex-shrink-0 overflow-hidden shadow-[0_0_15px_rgba(0,255,255,0.3)]">
           <img 
             src="https://github.com/oculink.png" 
             alt="oculink" 
             className="w-full h-full object-cover"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = 'none';
-              (e.target as HTMLImageElement).parentElement!.innerHTML = '<span style="font-size:2rem;color:#ff69b4;">♡</span>';
+              (e.target as HTMLImageElement).parentElement!.innerHTML = '<span style="font-size:2rem;color:#00ffff;">⚡</span>';
             }}
           />
         </div>
         <div className="flex-1">
-          <div className="win95-inset bg-white p-3 text-sm font-[VT323]">
-            <p className="text-pink-600">
-              <span className="text-purple-600 font-bold">~ $</span> cat about.txt
+          <div className="border-2 border-cyan-400/30 bg-black/40 p-3 text-sm font-[VT323] backdrop-blur-sm">
+            <p className="text-cyan-400">
+              <span className="text-green-400 font-bold">~ $</span> cat about.txt
             </p>
-            <p className="text-gray-700 mt-2">
+            <p className="text-cyan-200 mt-2">
               Hey, I'm oculink. I spend most of my time writing code, tweaking my Arch setup, 
               and figuring out how to make things look cool on a screen. I've been running 
               Arch as my daily driver because I enjoy having full control over my system.
             </p>
-            <p className="text-gray-700 mt-2">
+            <p className="text-cyan-200 mt-2">
               When I'm not coding, I'm probably researching hardware, messing with my rig 
               (currently rocking a 7900 XTX and an 8845HS), or going down some rabbit hole 
               on the Arch Wiki at 3am.
@@ -392,21 +395,21 @@ function AboutMeContent() {
       </div>
 
       {/* Info table */}
-      <div className="win95-inset bg-white p-3">
-        <table className="w-full text-sm font-[VT323] text-black">
+      <div className="border-2 border-cyan-400/30 bg-black/40 p-3 backdrop-blur-sm">
+        <table className="w-full text-sm font-[VT323]">
           <tbody>
-            <tr><td className="pr-4 text-pink-600 font-bold">OS:</td><td>Arch Linux (btw)</td></tr>
-            <tr><td className="pr-4 text-pink-600 font-bold">CPU:</td><td>Ryzen 7 8845HS</td></tr>
-            <tr><td className="pr-4 text-pink-600 font-bold">GPU:</td><td>RX 7900 XTX</td></tr>
-            <tr><td className="pr-4 text-pink-600 font-bold">RAM:</td><td>64GB DDR5 5600MHz</td></tr>
-            <tr><td className="pr-4 text-pink-600 font-bold">Status:</td><td className="text-pink-500">♡ Currently coding</td></tr>
+            <tr><td className="pr-4 text-green-400 font-bold">OS:</td><td className="text-cyan-200">Arch Linux (btw)</td></tr>
+            <tr><td className="pr-4 text-green-400 font-bold">CPU:</td><td className="text-cyan-200">Ryzen 7 8845HS</td></tr>
+            <tr><td className="pr-4 text-green-400 font-bold">GPU:</td><td className="text-cyan-200">RX 7900 XTX</td></tr>
+            <tr><td className="pr-4 text-green-400 font-bold">RAM:</td><td className="text-cyan-200">64GB DDR5 5600MHz</td></tr>
+            <tr><td className="pr-4 text-green-400 font-bold">Status:</td><td className="text-green-400">● Currently coding</td></tr>
           </tbody>
         </table>
       </div>
 
       {/* Decorative accent */}
-      <div className="text-center text-purple-400/60 text-xs font-[MedievalSharp]">
-        ♡ the machine is an extension of the mind ♡
+      <div className="text-center text-cyan-400/60 text-xs font-[MedievalSharp]">
+        ⚡ the machine is an extension of the mind ⚡
       </div>
     </div>
   );
@@ -414,26 +417,26 @@ function AboutMeContent() {
 
 function FastfetchContent() {
   return (
-    <div className="terminal overflow-x-auto">
-      <pre className="text-sm leading-relaxed whitespace-pre" style={{ fontFamily: "'VT323', monospace" }}>
+    <div className="overflow-x-auto" style={{ background: '#282a36' }}>
+      <pre className="text-sm leading-relaxed whitespace-pre p-4" style={{ fontFamily: "'VT323', monospace" }}>
         {'\n'}
         {'  '}<span className="terminal-user">oculink</span><span className="terminal-at">@</span><span className="terminal-host">archlinux</span>
-        {'\n  '}<span className="terminal-cyan">-----------------</span>
-        {'\n  '}<span className="ff-label">OS:</span><span className="ff-value"> Arch Linux x86_64</span>
-        {'\n  '}<span className="ff-label">Host:</span><span className="ff-value"> oculink</span>
-        {'\n  '}<span className="ff-label">Kernel:</span><span className="ff-value"> 6.12.1-arch1-1</span>
-        {'\n  '}<span className="ff-label">Uptime:</span><span className="ff-value"> since the last reboot</span>
-        {'\n  '}<span className="ff-label">Shell:</span><span className="ff-value"> bash 5.2.37</span>
-        {'\n  '}<span className="ff-label">CPU:</span><span className="ff-value"> AMD Ryzen 7 8845HS (16) @ 5.1GHz</span>
-        {'\n  '}<span className="ff-label">GPU:</span><span className="ff-value"> AMD Radeon RX 7900 XTX [Discrete]</span>
+        {'\n  '}<span style={{color:'#6272a4'}}>-----------------</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>OS:</span><span className="ff-value"> Arch Linux x86_64</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Host:</span><span className="ff-value"> oculink</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Kernel:</span><span className="ff-value"> 6.12.1-arch1-1</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Uptime:</span><span className="ff-value"> since the last reboot</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Shell:</span><span className="ff-value"> bash 5.2.37</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>CPU:</span><span className="ff-value"> AMD Ryzen 7 8845HS (16) @ 5.1GHz</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>GPU:</span><span className="ff-value"> AMD Radeon RX 7900 XTX [Discrete]</span>
         {'\n       '}<span className="ff-value"> AMD Radeon 780M Graphics [Integrated]</span>
-        {'\n  '}<span className="ff-label">Memory:</span><span className="ff-value"> 64GB DDR5 5600MHz</span>
-        {'\n  '}<span className="ff-label">Disk:</span><span className="ff-value"> too much SSD</span>
-        {'\n  '}<span className="ff-label">Locale:</span><span className="ff-value"> en_US.UTF-8</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Memory:</span><span className="ff-value"> 64GB DDR5 5600MHz</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Disk:</span><span className="ff-value"> too much SSD</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>Locale:</span><span className="ff-value"> en_US.UTF-8</span>
         {'\n'}
-        {'\n  '}<span className="terminal-magenta">███</span><span className="terminal-red">███</span><span className="terminal-green">███</span><span className="terminal-yellow">███</span><span style={{color:'#6272a4'}}>███</span><span className="terminal-cyan">███</span><span className="terminal-white">███</span>
+        {'\n  '}<span style={{color:'#ff79c6'}}>███</span><span style={{color:'#ff5555'}}>███</span><span style={{color:'#50fa7b'}}>███</span><span style={{color:'#f1fa8c'}}>███</span><span style={{color:'#6272a4'}}>███</span><span style={{color:'#8be9fd'}}>███</span><span style={{color:'#f8f8f2'}}>███</span>
         {'\n'}
-        {'\n  '}<span className="terminal-prompt">❯</span> <span className="cursor-blink" style={{ color: '#ff69b4' }}> </span>
+        {'\n  '}<span style={{color:'#bd93f9'}}>❯</span> <span className="cursor-blink" style={{ color: '#bd93f9' }}> </span>
       </pre>
     </div>
   );
@@ -441,40 +444,48 @@ function FastfetchContent() {
 
 function SkillsContent() {
   const skills = [
-    { name: 'JavaScript / TypeScript', level: 90, icon: '♡' },
-    { name: 'React / Next.js', level: 85, icon: '★' },
-    { name: 'Rust', level: 60, icon: '⛧' },
-    { name: 'Python', level: 75, icon: '✧' },
-    { name: 'Linux / Arch', level: 92, icon: '♡' },
-    { name: 'CSS / Tailwind', level: 88, icon: '★' },
-    { name: 'Node.js', level: 80, icon: '✦' },
-    { name: 'WebGL / Graphics', level: 55, icon: '♥' },
+    { name: 'JavaScript / TypeScript', level: 90, icon: '>' },
+    { name: 'React / Next.js', level: 85, icon: '>' },
+    { name: 'Rust', level: 60, icon: '>' },
+    { name: 'Python', level: 75, icon: '>' },
+    { name: 'Linux / Arch', level: 92, icon: '>' },
+    { name: 'CSS / Tailwind', level: 88, icon: '>' },
+    { name: 'Node.js', level: 80, icon: '>' },
+    { name: 'WebGL / Graphics', level: 55, icon: '>' },
   ];
 
   return (
     <div className="space-y-3">
+      <div className="text-center mb-4 font-[VT323] text-amber-400 text-sm">
+        ╔══════════════════════════╗<br/>
+        ║  SYSTEM SKILLS ANALYSIS  ║<br/>
+        ╚══════════════════════╝
+      </div>
+      
       {skills.map((skill, i) => (
         <div key={i} className="space-y-1">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <span className="text-pink-500">{skill.icon}</span>
-              <span className="text-sm font-[VT323] text-gray-800">{skill.name}</span>
+              <span className="text-amber-500 font-[VT323]">{skill.icon}</span>
+              <span className="text-sm font-[VT323] text-amber-300">{skill.name}</span>
             </div>
-            <span className="text-xs font-[VT323] text-pink-400">{skill.level}%</span>
+            <span className="text-xs font-[VT323] text-amber-400">{skill.level}%</span>
           </div>
-          <div className="progress-bar">
+          <div className="h-4 bg-black/60 border border-amber-600/50 relative overflow-hidden">
             <div 
-              className="progress-fill"
-              style={{ width: `${skill.level}%` }}
+              className="h-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-1000"
+              style={{ width: `${skill.level}%`, boxShadow: '0 0 10px rgba(255, 176, 0, 0.5)' }}
             />
+            {/* Scanline effect */}
+            <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(0,0,0,0.1)_2px,rgba(0,0,0,0.1)_4px)]" />
           </div>
         </div>
       ))}
       
       {/* Decorative accent */}
-      <div className="aero-card p-3 mt-4">
-        <p className="text-xs text-pink-600 font-[VT323] text-center">
-          ♡ always learning, always breaking things, always fixing them again ♡
+      <div className="border border-amber-600/50 bg-black/40 p-3 mt-4">
+        <p className="text-xs text-amber-400 font-[VT323] text-center">
+          {'>'} always learning, always breaking things, always fixing them again {'<'}
         </p>
       </div>
     </div>
@@ -483,19 +494,24 @@ function SkillsContent() {
 
 function ContactContent() {
   const links = [
-    { icon: 'https://cdn.simpleicons.org/github/white', label: 'GitHub', url: 'https://github.com/oculink', color: 'text-gray-800' },
-    { icon: 'https://cdn.simpleicons.org/x/white', label: 'Twitter/X', url: '#', color: 'text-gray-800' },
-    { icon: 'https://cdn.simpleicons.org/discord/white', label: 'Discord', url: '#', color: 'text-indigo-500' },
-    { icon: 'https://cdn.simpleicons.org/gmail/white', label: 'Email', url: '#', color: 'text-red-500' },
-    { icon: 'https://cdn.simpleicons.org/firefox/white', label: 'Website', url: '#', color: 'text-orange-500' },
+    { icon: 'https://cdn.simpleicons.org/github/white', label: 'GitHub', url: 'https://github.com/oculink' },
+    { icon: 'https://cdn.simpleicons.org/x/white', label: 'Twitter/X', url: '#' },
+    { icon: 'https://cdn.simpleicons.org/discord/white', label: 'Discord', url: '#' },
+    { icon: 'https://cdn.simpleicons.org/gmail/white', label: 'Email', url: '#' },
+    { icon: 'https://cdn.simpleicons.org/firefox/white', label: 'Website', url: '#' },
   ];
 
   return (
     <div className="space-y-4">
+      {/* Gothic header */}
+      <div className="text-center font-[VT323] text-red-400 text-sm">
+        ⛧ ⛧ ⛧ SUMMONING RITUAL ⛧ ⛧ ⛧
+      </div>
+
       {/* Marquee */}
-      <div className="win95-inset bg-black overflow-hidden py-1">
-        <div className="marquee-text text-pink-400 font-[VT323] text-sm">
-          ♡ ♡ ♡ Thanks for visiting my corner of the internet. Feel free to reach out if you want to chat about code, hardware, or anything in between ♡ ♡ ♡
+      <div className="border-2 border-red-800/50 bg-black/60 overflow-hidden py-1">
+        <div className="marquee-text text-red-400 font-[VT323] text-sm">
+          ⛧ ⛧ ⛧ Reach out through the void. Contact me if you dare to discuss code, hardware, or the secrets of the digital realm ⛧ ⛧ ⛧
         </div>
       </div>
 
@@ -507,38 +523,40 @@ function ContactContent() {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="retro-btn flex flex-col items-center gap-1 py-3 text-center"
+            className="flex flex-col items-center gap-1 py-3 text-center border-2 border-red-800/50 bg-black/40 hover:bg-red-900/30 transition-all hover:shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:border-red-600"
           >
             <img src={link.icon} alt="" style={{ width: 20, height: 20, imageRendering: 'auto' }} />
-            <span className={`text-sm font-[VT323] ${link.color}`}>{link.label}</span>
+            <span className="text-sm font-[VT323] text-red-300">{link.label}</span>
           </a>
         ))}
       </div>
 
       {/* Stream chat at bottom */}
-      <div className="stream-chat mt-4">
-        <div className="text-xs text-pink-500 font-bold mb-1">♡ Live Chat ♡</div>
-        <div className="chat-message">
-          <span className="chat-user">p-chan:</span>
-          <span className="text-gray-600"> thanks for checking out the page!</span>
+      <div className="border-2 border-red-800/50 bg-black/60 p-3 mt-4">
+        <div className="text-xs text-red-400 font-bold mb-1 font-[VT323]">⛧ Dark Chat ⛧</div>
+        <div className="border-b border-red-900/30 pb-1 mb-1">
+          <span className="text-red-500 font-[VT323] text-xs">demon_lord:</span>
+          <span className="text-red-300/70 font-[VT323] text-xs"> nice page, very cursed</span>
         </div>
-        <div className="chat-message">
-          <span className="chat-user" style={{ color: '#6b3fa0' }}>femme_soule:</span>
-          <span className="text-gray-600"> nice aesthetic, very demon girl coded</span>
+        <div className="border-b border-red-900/30 pb-1 mb-1">
+          <span className="text-purple-400 font-[VT323] text-xs">femme_soule:</span>
+          <span className="text-red-300/70 font-[VT323] text-xs"> surrender your soul to this aesthetic</span>
         </div>
-        <div className="chat-message">
-          <span className="chat-user" style={{ color: '#d63384' }}>kamelie:</span>
-          <span className="text-gray-600"> first!! ♡♡♡</span>
+        <div>
+          <span className="text-pink-400 font-[VT323] text-xs">dark_angel:</span>
+          <span className="text-red-300/70 font-[VT323] text-xs"> first!! ⛧⛧⛧</span>
         </div>
       </div>
 
       {/* Footer message */}
       <div className="text-center space-y-2">
-        <div className="gothic-divider">
-          <span className="text-pink-400/60 text-xs font-[MedievalSharp]">♡ fin ♡</span>
+        <div className="flex items-center gap-2 justify-center opacity-60">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
+          <span className="text-red-400/60 text-xs font-[MedievalSharp]">⛧ fin ⛧</span>
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
         </div>
-        <p className="text-xs text-pink-400/60 font-[VT323]">
-          {new Date().getFullYear()} oculink | Made with Arch, caffeine, and a little bit of chaos
+        <p className="text-xs text-red-400/60 font-[VT323]">
+          {new Date().getFullYear()} oculink | Forged in the fires of Arch Linux
         </p>
       </div>
     </div>

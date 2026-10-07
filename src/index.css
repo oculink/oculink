@@ -53,26 +53,80 @@ body {
   z-index: 9998;
 }
 
-/* Scattered windows */
+/* Vertical stack layout */
 .desktop-area {
   position: relative;
   width: 100%;
   min-height: calc(100vh - 40px);
-  padding-bottom: 60px;
+  padding-bottom: 80px;
 }
 
-/* Windows - kawaii gothic style */
+/* Windows - base style */
 .win95-window {
-  background: linear-gradient(180deg, #ffe0f5 0%, #ffd4e8 100%);
   border: 3px solid;
+  box-shadow: 
+    inset 2px 2px 0 rgba(255, 255, 255, 0.5),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.3),
+    4px 4px 0 rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: box-shadow 0.2s, transform 0.2s;
+  margin-bottom: 60px;
+}
+
+/* Theme: Pink Gothic (Header) */
+.win95-window.theme-pink {
+  background: linear-gradient(180deg, #ffe0f5 0%, #ffd4e8 100%);
   border-color: #fff0f8 #d63384 #d63384 #fff0f8;
   box-shadow: 
     inset 2px 2px 0 #fff0f8,
     inset -2px -2px 0 #d63384,
-    4px 4px 0 rgba(107, 63, 160, 0.4),
-    0 0 20px rgba(255, 105, 180, 0.3);
-  position: absolute;
-  transition: box-shadow 0.2s, transform 0.2s;
+    4px 4px 0 rgba(214, 51, 132, 0.4),
+    0 0 25px rgba(255, 105, 180, 0.4);
+}
+
+/* Theme: Dark Terminal (About) */
+.win95-window.theme-terminal {
+  background: linear-gradient(180deg, #1a1a2e 0%, #0f0f1e 100%);
+  border-color: #4a4a6e #1a1a2e #1a1a2e #4a4a6e;
+  box-shadow: 
+    inset 2px 2px 0 #2a2a4e,
+    inset -2px -2px 0 #0a0a1e,
+    4px 4px 0 rgba(0, 255, 255, 0.3),
+    0 0 30px rgba(0, 255, 255, 0.2);
+}
+
+/* Theme: Dracula Terminal (Fastfetch) */
+.win95-window.theme-dracula {
+  background: linear-gradient(180deg, #282a36 0%, #1e1f29 100%);
+  border-color: #6272a4 #282a36 #282a36 #6272a4;
+  box-shadow: 
+    inset 2px 2px 0 #44475a,
+    inset -2px -2px 0 #21222c,
+    4px 4px 0 rgba(189, 147, 249, 0.4),
+    0 0 30px rgba(189, 147, 249, 0.3);
+}
+
+/* Theme: Amber CRT (Skills) */
+.win95-window.theme-amber {
+  background: linear-gradient(180deg, #3d2817 0%, #2a1a0f 100%);
+  border-color: #ffb000 #5a3a1a #5a3a1a #ffb000;
+  box-shadow: 
+    inset 2px 2px 0 #ffcc44,
+    inset -2px -2px 0 #1a0f05,
+    4px 4px 0 rgba(255, 176, 0, 0.4),
+    0 0 35px rgba(255, 176, 0, 0.3);
+}
+
+/* Theme: Blood Red Gothic (Contact) */
+.win95-window.theme-blood {
+  background: linear-gradient(180deg, #2d0a0a 0%, #1a0505 100%);
+  border-color: #8b0000 #3d0000 #3d0000 #8b0000;
+  box-shadow: 
+    inset 2px 2px 0 #5a0000,
+    inset -2px -2px 0 #0a0000,
+    4px 4px 0 rgba(139, 0, 0, 0.5),
+    0 0 30px rgba(139, 0, 0, 0.4);
 }
 
 .win95-window:hover {
@@ -91,9 +145,8 @@ body {
   pointer-events: none;
 }
 
-/* Title bar - pink pastel with gothic touch */
+/* Title bar - base style */
 .title-bar {
-  background: linear-gradient(90deg, #ff69b4 0%, #ffb6e5 50%, #ff69b4 100%);
   padding: 4px 6px;
   display: flex;
   align-items: center;
@@ -101,7 +154,7 @@ body {
   position: relative;
   overflow: hidden;
   cursor: grab;
-  border-bottom: 2px solid #d63384;
+  border-bottom: 2px solid;
 }
 
 .title-bar:active {
@@ -115,13 +168,163 @@ body {
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
 }
 
+/* Pink Gothic title bar */
+.title-bar.theme-pink {
+  background: linear-gradient(90deg, #ff69b4 0%, #ffb6e5 50%, #ff69b4 100%);
+  border-bottom-color: #d63384;
+}
+
+/* Pink Gothic corner decorations */
+.win95-window.theme-pink::before {
+  content: '♡';
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #ff69b4;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+.win95-window.theme-pink::after {
+  content: '♡';
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  color: #ff69b4;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+/* Dark Terminal title bar */
+.title-bar.theme-terminal {
+  background: linear-gradient(90deg, #0f0f1e 0%, #1a3a4e 50%, #0f0f1e 100%);
+  border-bottom-color: #00ffff;
+}
+
+/* Terminal corner decorations */
+.win95-window.theme-terminal::before {
+  content: '⚡';
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #00ffff;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+.win95-window.theme-terminal::after {
+  content: '⚡';
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  color: #00ffff;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+}
+
+/* Dracula title bar */
+.title-bar.theme-dracula {
+  background: linear-gradient(90deg, #21222c 0%, #44475a 50%, #21222c 100%);
+  border-bottom-color: #bd93f9;
+}
+
+/* Dracula corner decorations */
+.win95-window.theme-dracula::before {
+  content: '✧';
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #bd93f9;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(189, 147, 249, 0.8);
+}
+
+.win95-window.theme-dracula::after {
+  content: '✧';
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  color: #bd93f9;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(189, 147, 249, 0.8);
+}
+
+/* Amber CRT title bar */
+.title-bar.theme-amber {
+  background: linear-gradient(90deg, #1a0f05 0%, #5a3a1a 50%, #1a0f05 100%);
+  border-bottom-color: #ffb000;
+}
+
+/* Amber CRT corner decorations */
+.win95-window.theme-amber::before {
+  content: '>';
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #ffb000;
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+  font-weight: bold;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(255, 176, 0, 0.8);
+}
+
+.win95-window.theme-amber::after {
+  content: '<';
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  color: #ffb000;
+  font-size: 18px;
+  font-family: 'VT323', monospace;
+  font-weight: bold;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(255, 176, 0, 0.8);
+}
+
+/* Blood Red Gothic title bar */
+.title-bar.theme-blood {
+  background: linear-gradient(90deg, #0a0000 0%, #3d0000 50%, #0a0000 100%);
+  border-bottom-color: #8b0000;
+}
+
+/* Blood Red Gothic corner decorations */
+.win95-window.theme-blood::before {
+  content: '⛧';
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #8b0000;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+}
+
+.win95-window.theme-blood::after {
+  content: '⛧';
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  color: #8b0000;
+  font-size: 16px;
+  z-index: 10;
+  text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+}
+
+/* Legacy support */
 .title-bar-gothic {
   background: linear-gradient(90deg, #2d1b4e 0%, #6b3fa0 50%, #2d1b4e 100%);
-  border-bottom: 2px solid #1a0f2e;
+  border-bottom-color: #1a0f2e;
 }
 
 .title-bar-text {
@@ -164,13 +367,41 @@ body {
   color: white;
 }
 
-/* Window content */
+/* Window content - base */
 .window-content {
   padding: 10px;
-  background: linear-gradient(180deg, #fff0f8 0%, #ffe0f5 100%);
   position: relative;
   max-height: 500px;
   overflow-y: auto;
+}
+
+/* Pink Gothic content */
+.window-content.theme-pink {
+  background: linear-gradient(180deg, #fff0f8 0%, #ffe0f5 100%);
+}
+
+/* Dark Terminal content */
+.window-content.theme-terminal {
+  background: linear-gradient(180deg, #0f0f1e 0%, #1a1a2e 100%);
+  color: #00ffff;
+}
+
+/* Dracula content */
+.window-content.theme-dracula {
+  background: #282a36;
+  color: #f8f8f2;
+}
+
+/* Amber CRT content */
+.window-content.theme-amber {
+  background: linear-gradient(180deg, #1a0f05 0%, #2a1a0f 100%);
+  color: #ffb000;
+}
+
+/* Blood Red Gothic content */
+.window-content.theme-blood {
+  background: linear-gradient(180deg, #1a0505 0%, #2d0a0a 100%);
+  color: #ff4444;
 }
 
 /* Inset field */
