@@ -4,12 +4,26 @@ function App() {
   const [zIndex, setZIndex] = useState<Record<string, number>>({});
   const [highestZ, setHighestZ] = useState(10);
   const [viewerCount, setViewerCount] = useState(1337);
+  const [timestamp, setTimestamp] = useState('00:00:00');
 
   // Simulate viewer count fluctuation
   useEffect(() => {
     const interval = setInterval(() => {
       setViewerCount(prev => prev + Math.floor(Math.random() * 11) - 5);
     }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // VHS timestamp counter
+  useEffect(() => {
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      const hours = Math.floor(elapsed / 3600).toString().padStart(2, '0');
+      const minutes = Math.floor((elapsed % 3600) / 60).toString().padStart(2, '0');
+      const seconds = (elapsed % 60).toString().padStart(2, '0');
+      setTimestamp(`${hours}:${minutes}:${seconds}`);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -30,6 +44,11 @@ function App() {
 
   return (
     <div className="main-bg scanlines">
+      {/* VHS Overlays */}
+      <div className="vhs-rec">REC</div>
+      <div className="vhs-timestamp">PLAY ▶ {timestamp}</div>
+      <div className="noise-overlay"></div>
+
       {/* Main Content Area - Vertical Stack */}
       <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
         {/* Header / Banner - VHS Style */}

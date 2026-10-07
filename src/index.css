@@ -24,17 +24,80 @@ body {
   background: linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #1a0f2e 100%);
 }
 
-/* Main background with pastel gradient */
+/* Main background with synthwave GIF */
 .main-bg {
   min-height: 100vh;
   width: 100%;
-  background: 
-    radial-gradient(ellipse at 20% 30%, rgba(255, 182, 229, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(224, 176, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(255, 105, 180, 0.08) 0%, transparent 60%),
-    linear-gradient(135deg, #1a0f2e 0%, #2d1b4e 50%, #1a0f2e 100%);
+  background: url('https://i.pinimg.com/originals/59/69/84/59698460a33a71e42ddf46e185e17737.gif') center center / cover no-repeat fixed;
   position: relative;
   padding: 20px;
+}
+
+/* VHS overlay to hide low resolution */
+.main-bg::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 0, 255, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 255, 255, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 1;
+  animation: vhs-noise 0.5s steps(10) infinite;
+}
+
+.main-bg::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(
+      transparent 0%,
+      rgba(255, 0, 255, 0.02) 50%,
+      transparent 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+  animation: vhs-tracking 8s linear infinite;
+}
+
+@keyframes vhs-noise {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes vhs-tracking {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 /* Scanline overlay */
@@ -42,15 +105,104 @@ body {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(255, 182, 229, 0.03) 2px,
-    rgba(255, 182, 229, 0.03) 4px
-  );
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.1) 2px,
+      rgba(0, 0, 0, 0.1) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.02) 0px,
+      rgba(0, 255, 0, 0.02) 1px,
+      rgba(0, 0, 255, 0.02) 2px
+    );
   pointer-events: none;
   z-index: 9998;
+  animation: scanline-move 0.1s linear infinite;
+}
+
+@keyframes scanline-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
+}
+
+/* VHS timestamp overlay */
+.vhs-timestamp {
+  position: fixed;
+  bottom: 60px;
+  right: 20px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #ffffff;
+  text-shadow: 
+    2px 0 #ff0000,
+    -2px 0 #00ffff,
+    0 0 10px rgba(255, 255, 255, 0.5);
+  z-index: 9997;
+  pointer-events: none;
+  animation: vhs-flicker 0.3s infinite;
+  letter-spacing: 2px;
+}
+
+.vhs-rec {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: #ff0000;
+  text-shadow: 
+    2px 0 #ff0000,
+    -2px 0 #ff0000,
+    0 0 10px rgba(255, 0, 0, 0.8);
+  z-index: 9997;
+  pointer-events: none;
+  animation: rec-blink 1s infinite;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vhs-rec::before {
+  content: '●';
+  font-size: 24px;
+  animation: rec-blink 1s infinite;
+}
+
+@keyframes vhs-flicker {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rec-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9996;
+  mix-blend-mode: overlay;
 }
 
 /* Vertical stack layout */
@@ -69,10 +221,32 @@ body {
   box-shadow: 
     inset 1px 1px 0 #dfdfdf,
     inset -1px -1px 0 #000000,
-    2px 2px 8px rgba(0, 0, 0, 0.5);
+    2px 2px 8px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(255, 0, 255, 0.1),
+    0 0 40px rgba(0, 255, 255, 0.05);
   position: relative;
   transition: box-shadow 0.2s;
   margin-bottom: 0;
+  animation: window-glitch 10s infinite;
+}
+
+@keyframes window-glitch {
+  0%, 95%, 100% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+  96% {
+    transform: translate(-2px, 1px);
+    filter: hue-rotate(90deg);
+  }
+  97% {
+    transform: translate(2px, -1px);
+    filter: hue-rotate(-90deg);
+  }
+  98% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(180deg);
+  }
 }
 
 /* Theme: Pink Gothic (Header) */
