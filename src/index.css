@@ -225,7 +225,7 @@ body {
     0 0 20px rgba(255, 0, 255, 0.1),
     0 0 40px rgba(0, 255, 255, 0.05);
   position: relative;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, opacity 0.3s ease;
   margin-bottom: 0;
   animation: window-glitch 10s infinite;
 }
@@ -540,6 +540,7 @@ body {
     2px 2px 8px rgba(0, 0, 0, 0.5);
   position: relative;
   cursor: pointer;
+  transition: opacity 0.3s ease;
 }
 
 .error-dialog-content {

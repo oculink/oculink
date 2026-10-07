@@ -5,6 +5,7 @@ function App() {
   const [highestZ, setHighestZ] = useState(10);
   const [timestamp, setTimestamp] = useState('00:00:00');
   const [webcamOpacity, setWebcamOpacity] = useState(0.7);
+  const [scrollY, setScrollY] = useState(0);
 
   // VHS timestamp counter
   useEffect(() => {
@@ -18,6 +19,22 @@ function App() {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // Track scroll position
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Calculate window opacity based on scroll
+  const getWindowOpacity = (index: number) => {
+    const fadeStart = index * 200;
+    const fadeEnd = fadeStart + 400;
+    if (scrollY < fadeStart) return 1;
+    if (scrollY > fadeEnd) return 0.3;
+    return 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart) * 0.7;
+  };
 
   const bringToFront = (id: string) => {
     const newZ = highestZ + 1;
@@ -62,7 +79,7 @@ function App() {
         <div 
           id="header"
           className="error-dialog"
-          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5 }}
+          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5, opacity: getWindowOpacity(0) }}
           onClick={() => bringToFront('header')}
         >
           <HeaderContent />
@@ -81,7 +98,7 @@ function App() {
             id="about"
             title="~/about_me.txt"
             theme="terminal"
-            style={currentLayout.about}
+            style={{ ...currentLayout.about, opacity: getWindowOpacity(1) }}
             zIndex={zIndex['about'] || 6}
             onFocus={() => bringToFront('about')}
           >
@@ -93,7 +110,7 @@ function App() {
             id="fastfetch"
             title="oculink@archlinux: ~"
             theme="dracula"
-            style={currentLayout.fastfetch}
+            style={{ ...currentLayout.fastfetch, opacity: getWindowOpacity(2) }}
             zIndex={zIndex['fastfetch'] || 8}
             onFocus={() => bringToFront('fastfetch')}
           >
