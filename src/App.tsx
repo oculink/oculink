@@ -36,9 +36,9 @@ function App() {
 
   // Window layout - side by side with inconsistent heights
   const windowLayout = useMemo(() => ({
-    header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
-    about: { width: '45%', height: '500px', transform: 'rotate(0.4deg)' },
-    fastfetch: { width: '50%', height: '600px', transform: 'rotate(-0.5deg)' },
+    header: { width: 'min(700px, 94vw)', margin: '0 auto' },
+    about: { width: '45%', height: '500px' },
+    fastfetch: { width: '50%', height: '600px' },
   }), []);
 
   // Mobile layout - stacked
@@ -309,14 +309,16 @@ function AboutMeContent() {
               <span className="text-green-400 font-bold">~ $</span> cat about.txt
             </p>
             <p className="text-cyan-200 mt-3">
-              Hey, I'm oculink. I spend most of my time writing code, tweaking my Arch setup, 
-              and figuring out how to make things look cool on a screen. I've been running 
-              Arch as my daily driver because I enjoy having full control over my system.
+              Hey, I'm oculink. I happen to have social anxiety, ADHD, bipolar, and BPD. 
+              I'm a boyfailure who spends most of my time coding, developing, and sometimes debugging.
             </p>
             <p className="text-cyan-200 mt-3">
-              When I'm not coding, I'm probably researching hardware, messing with my rig 
-              (currently rocking a 7900 XTX and an 8845HS), or going down some rabbit hole 
-              on the Arch Wiki at 3am.
+              When I'm not programming, I'm probably bedrotting or doomscrolling. I love cute cats 
+              and moon jellyfish. My favorite things to consume are fruit jellies, vitamin C orange 
+              flavored stuff, and juice smoothies.
+            </p>
+            <p className="text-cyan-200 mt-3">
+              For games, I play Minecraft, Roblox, Portal 2, Geometry Dash, and Needy Streamer Overload.
             </p>
           </div>
         </div>
