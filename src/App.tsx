@@ -221,6 +221,14 @@ function Win95Window({
 }
 
 function HeaderContent() {
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleEmailClick = () => {
+    navigator.clipboard.writeText('oculink@proton.me');
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
+
   return (
     <div className="vhs-header">
       {/* Title bar */}
@@ -239,24 +247,31 @@ function HeaderContent() {
           <h1 className="vhs-name">oculink</h1>
         </div>
 
+        {/* Email copied notification */}
+        {emailCopied && (
+          <div className="email-copied-notification">
+            Email copied!
+          </div>
+        )}
+
         {/* Social buttons */}
         <div className="social-buttons">
           <a href="https://github.com/oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
             <img src="https://cdn.simpleicons.org/github/white" alt="GitHub" className="social-icon" />
             <span>GitHub</span>
           </a>
-          <a href="#" className="social-btn">
-            <img src="https://cdn.simpleicons.org/x/white" alt="Twitter" className="social-icon" />
-            <span>Twitter</span>
+          <a href="https://steamcommunity.com/id/oculink/" target="_blank" rel="noopener noreferrer" className="social-btn">
+            <img src="https://cdn.simpleicons.org/steam/white" alt="Steam" className="social-icon" />
+            <span>Steam</span>
           </a>
-          <a href="#" className="social-btn">
-            <img src="https://cdn.simpleicons.org/discord/white" alt="Discord" className="social-icon" />
-            <span>Discord</span>
+          <a href="https://www.tiktok.com/@oculink" target="_blank" rel="noopener noreferrer" className="social-btn">
+            <img src="https://cdn.simpleicons.org/tiktok/white" alt="TikTok" className="social-icon" />
+            <span>TikTok</span>
           </a>
-          <a href="#" className="social-btn">
-            <img src="https://cdn.simpleicons.org/gmail/white" alt="Email" className="social-icon" />
+          <button onClick={handleEmailClick} className="social-btn">
+            <img src="https://cdn.simpleicons.org/protonmail/white" alt="Email" className="social-icon" />
             <span>Email</span>
-          </a>
+          </button>
         </div>
       </div>
     </div>
