@@ -322,15 +322,6 @@ function AboutMeContent() {
         </div>
       </div>
 
-      {/* Info table */}
-      <div className="border-2 border-cyan-400/30 bg-black/40 p-4 backdrop-blur-sm">
-        <table className="w-full text-lg font-[VT323]">
-          <tbody>
-            <tr><td className="pr-4 text-green-400 font-bold">CPU:</td><td className="text-cyan-200">Ryzen 7 8845HS</td></tr>
-            <tr><td className="pr-4 text-green-400 font-bold">RAM:</td><td className="text-cyan-200">64GB DDR5 5600MHz</td></tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   );
 }
