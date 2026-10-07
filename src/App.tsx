@@ -29,11 +29,11 @@ function App() {
 
   // Calculate window opacity based on scroll
   const getWindowOpacity = (index: number) => {
-    const fadeStart = index * 200;
-    const fadeEnd = fadeStart + 400;
+    const fadeStart = index * 300;
+    const fadeEnd = fadeStart + 500;
     if (scrollY < fadeStart) return 1;
-    if (scrollY > fadeEnd) return 0.3;
-    return 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart) * 0.7;
+    if (scrollY > fadeEnd) return 0.4;
+    return 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart) * 0.6;
   };
 
   const bringToFront = (id: string) => {
@@ -42,18 +42,18 @@ function App() {
     setZIndex(prev => ({ ...prev, [id]: newZ }));
   };
 
-  // Window layout - side by side with inconsistent heights
+  // Window layout - stacked vertically with inconsistent heights
   const windowLayout = useMemo(() => ({
     header: { width: 'min(700px, 94vw)', transform: 'rotate(-0.3deg)', margin: '0 auto' },
-    about: { width: '45%', height: '400px', transform: 'rotate(0.4deg)' },
-    fastfetch: { width: '50%', height: '500px', transform: 'rotate(-0.5deg)' },
+    about: { width: 'min(600px, 90vw)', height: '500px', transform: 'rotate(0.4deg)', margin: '0 auto' },
+    fastfetch: { width: 'min(650px, 92vw)', height: '600px', transform: 'rotate(-0.5deg)', margin: '0 auto' },
   }), []);
 
   // Mobile layout - stacked
   const mobileLayout = useMemo(() => ({
     header: { width: '100%', transform: 'none', margin: '0' },
-    about: { width: '100%', height: 'auto', minHeight: '400px', transform: 'none' },
-    fastfetch: { width: '100%', height: 'auto', minHeight: '500px', transform: 'none' },
+    about: { width: '100%', height: 'auto', minHeight: '500px', transform: 'none' },
+    fastfetch: { width: '100%', height: 'auto', minHeight: '600px', transform: 'none' },
   }), []);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -73,9 +73,9 @@ function App() {
       <div className="vhs-timestamp">PLAY ▶ {timestamp}</div>
       <div className="noise-overlay"></div>
 
-      {/* Main Content Area - Side by Side */}
-      <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
-        {/* Header - Full width */}
+      {/* Main Content Area - Stacked Vertically */}
+      <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '40px', padding: '60px 20px' }}>
+        {/* Header */}
         <div 
           id="header"
           className="error-dialog"
@@ -85,39 +85,29 @@ function App() {
           <HeaderContent />
         </div>
 
-        {/* Windows Row - Side by side on desktop, stacked on mobile */}
-        <div style={{ 
-          display: 'flex', 
-          gap: '20px', 
-          justifyContent: 'center', 
-          alignItems: 'flex-start',
-          flexDirection: isMobile ? 'column' : 'row'
-        }}>
-          {/* About Me - Dark Terminal */}
-          <Win95Window
-            id="about"
-            title="~/about_me.txt"
-            theme="terminal"
-            style={{ ...currentLayout.about, opacity: getWindowOpacity(1) }}
-            zIndex={zIndex['about'] || 6}
-            onFocus={() => bringToFront('about')}
-          >
-            <AboutMeContent />
-          </Win95Window>
+        {/* About Me - Dark Terminal */}
+        <Win95Window
+          id="about"
+          title="~/about_me.txt"
+          theme="terminal"
+          style={{ ...currentLayout.about, opacity: getWindowOpacity(1) }}
+          zIndex={zIndex['about'] || 6}
+          onFocus={() => bringToFront('about')}
+        >
+          <AboutMeContent />
+        </Win95Window>
 
-          {/* Fastfetch - Dracula */}
-          <Win95Window
-            id="fastfetch"
-            title="oculink@archlinux: ~"
-            theme="dracula"
-            style={{ ...currentLayout.fastfetch, opacity: getWindowOpacity(2) }}
-            zIndex={zIndex['fastfetch'] || 8}
-            onFocus={() => bringToFront('fastfetch')}
-          >
-            <FastfetchContent />
-          </Win95Window>
-
-        </div>
+        {/* Fastfetch - Dracula */}
+        <Win95Window
+          id="fastfetch"
+          title="oculink@archlinux: ~"
+          theme="dracula"
+          style={{ ...currentLayout.fastfetch, opacity: getWindowOpacity(2) }}
+          zIndex={zIndex['fastfetch'] || 8}
+          onFocus={() => bringToFront('fastfetch')}
+        >
+          <FastfetchContent />
+        </Win95Window>
 
       </div>
 
