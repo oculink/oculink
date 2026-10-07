@@ -25,9 +25,10 @@ body {
   background: #0a0a12;
 }
 
-/* Desktop background - blend of retro teal + dark gothic */
+/* Desktop background */
 .desktop-bg {
   min-height: 100vh;
+  width: 100%;
   background: 
     radial-gradient(ellipse at 20% 50%, rgba(100, 180, 255, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(107, 63, 160, 0.1) 0%, transparent 40%),
@@ -46,6 +47,14 @@ body {
   z-index: 0;
 }
 
+/* Scattered windows */
+.desktop-area {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 36px);
+  padding-bottom: 60px;
+}
+
 /* Windows 95 style window */
 .win95-window {
   background: var(--win-gray);
@@ -55,7 +64,15 @@ body {
     inset 1px 1px 0 var(--win-light),
     inset -1px -1px 0 var(--win-dark),
     4px 4px 0 rgba(0,0,0,0.5);
-  position: relative;
+  position: absolute;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.win95-window:hover {
+  box-shadow: 
+    inset 1px 1px 0 var(--win-light),
+    inset -1px -1px 0 var(--win-dark),
+    6px 6px 0 rgba(0,0,0,0.6);
 }
 
 .win95-window::after {
@@ -67,7 +84,7 @@ body {
   border-radius: inherit;
 }
 
-/* Title bar - retro with aero gloss */
+/* Title bar */
 .title-bar {
   background: linear-gradient(90deg, #000080 0%, #1084d0 50%, #000080 100%);
   padding: 3px 4px;
@@ -76,6 +93,11 @@ body {
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  cursor: grab;
+}
+
+.title-bar:active {
+  cursor: grabbing;
 }
 
 .title-bar::after {
@@ -100,6 +122,9 @@ body {
   font-weight: bold;
   text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .title-bar-buttons {
@@ -124,14 +149,16 @@ body {
   line-height: 1;
 }
 
-/* Window content area with subtle glass effect */
+/* Window content */
 .window-content {
   padding: 8px;
   background: var(--win-gray);
   position: relative;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
-/* Inset field (like text fields in Win95) */
+/* Inset field */
 .win95-inset {
   border: 2px solid;
   border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
@@ -175,39 +202,7 @@ body {
   position: relative;
 }
 
-.gothic-border::before,
-.gothic-border::after {
-  content: '⚜';
-  position: absolute;
-  color: var(--gothic-accent);
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.gothic-border::before {
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.gothic-border::after {
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Pixel art decorations */
-.pixel-corner {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--gothic-accent);
-  box-shadow: 
-    0 0 0 2px var(--gothic-dark),
-    0 0 8px rgba(107, 63, 160, 0.5);
-}
-
-/* Floating bubbles (Fruitiger Aero) */
+/* Floating bubbles */
 @keyframes float-bubble {
   0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
   50% { transform: translateY(-20px) scale(1.1); opacity: 0.5; }
@@ -252,17 +247,11 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
-  position: relative;
-}
-
-.taskbar::after {
-  content: '';
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: rgba(255,255,255,0.5);
+  z-index: 999;
 }
 
 .start-btn {
@@ -304,7 +293,7 @@ body {
     rgba(0, 0, 0, 0.03) 4px
   );
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
 }
 
 /* Progress bar */
@@ -347,47 +336,12 @@ body {
 }
 
 .cursor-blink::after {
-  content: '█';
+  content: '\2588';
   animation: blink 1s step-end infinite;
   color: #00ff00;
 }
 
-/* Status bar */
-.status-bar {
-  border-top: 2px solid;
-  border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
-  padding: 2px 6px;
-  font-size: 12px;
-  background: var(--win-gray);
-}
-
-/* Nature leaf decoration (Fruitiger Aero) */
-@keyframes sway {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
-}
-
-.leaf-deco {
-  animation: sway 3s ease-in-out infinite;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 16px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--win-gray);
-  border: 1px solid var(--win-dark);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--win-gray);
-  border: 2px solid;
-  border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
-}
-
-/* Marquee-like animation */
+/* Marquee */
 @keyframes scroll-text {
   0% { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
@@ -398,16 +352,12 @@ body {
   white-space: nowrap;
 }
 
-/* Glow effect */
+/* Glow */
 .glow-purple {
   text-shadow: 0 0 10px rgba(107, 63, 160, 0.8), 0 0 20px rgba(107, 63, 160, 0.4);
 }
 
-.glow-blue {
-  text-shadow: 0 0 10px rgba(100, 180, 255, 0.8), 0 0 20px rgba(100, 180, 255, 0.4);
-}
-
-/* Aero shine animation */
+/* Aero shine */
 @keyframes shine {
   0% { left: -100%; }
   100% { left: 200%; }
@@ -427,4 +377,166 @@ body {
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   animation: shine 4s ease-in-out infinite;
+}
+
+/* Leaf sway */
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+.leaf-deco {
+  animation: sway 3s ease-in-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--win-gray);
+  border: 1px solid var(--win-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--win-gray);
+  border: 2px solid;
+  border-color: var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+}
+
+/* Terminal styling */
+.terminal {
+  background: #0c0c0c;
+  color: #cccccc;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 12px;
+  border: 2px solid;
+  border-color: var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+}
+
+.terminal-prompt {
+  color: #6aedff;
+}
+
+.terminal-user {
+  color: #50fa7b;
+}
+
+.terminal-at {
+  color: #cccccc;
+}
+
+.terminal-host {
+  color: #50fa7b;
+}
+
+.terminal-path {
+  color: #bd93f9;
+}
+
+.terminal-cyan {
+  color: #6aedff;
+}
+
+.terminal-blue {
+  color: #6272a4;
+}
+
+.terminal-white {
+  color: #f8f8f2;
+}
+
+.terminal-green {
+  color: #50fa7b;
+}
+
+.terminal-yellow {
+  color: #f1fa8c;
+}
+
+.terminal-red {
+  color: #ff5555;
+}
+
+.terminal-magenta {
+  color: #ff79c6;
+}
+
+/* Icon images */
+.icon-img {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  image-rendering: pixelated;
+}
+
+.icon-img-lg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Desktop icons */
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px;
+  width: 70px;
+  text-align: center;
+}
+
+.desktop-icon:hover {
+  background: rgba(100, 180, 255, 0.2);
+  border: 1px dotted rgba(255,255,255,0.3);
+}
+
+.desktop-icon img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+}
+
+.desktop-icon span {
+  font-family: 'VT323', monospace;
+  font-size: 11px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  word-break: break-word;
+}
+
+/* Fastfetch ASCII art colors */
+.ff-arch-blue {
+  color: #0af;
+}
+
+.ff-label {
+  color: #0af;
+  font-weight: bold;
+}
+
+.ff-value {
+  color: #f8f8f2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .win95-window {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    margin-bottom: 16px;
+    transform: none !important;
+  }
+  
+  .desktop-area {
+    padding: 16px;
+  }
 }
