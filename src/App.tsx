@@ -30,18 +30,12 @@ function App() {
 
   return (
     <div className="main-bg scanlines">
-      {/* Floating Decorations */}
-      <FloatingDecorations />
-
-      {/* Character Sprites */}
-      <CharacterSprites />
-
       {/* Main Content Area - Vertical Stack */}
-      <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '60px', padding: '40px 20px' }}>
-        {/* Header / Banner - Pink Gothic */}
+      <div className="desktop-area" style={{ display: 'flex', flexDirection: 'column', gap: '30px', padding: '40px 20px' }}>
+        {/* Header / Banner */}
         <Win95Window
           id="header"
-          title="♡ omgkawaiiangel ♡"
+          title="oculink"
           theme="pink"
           style={windowLayout.header}
           zIndex={zIndex['header'] || 5}
@@ -49,13 +43,6 @@ function App() {
         >
           <HeaderContent viewerCount={viewerCount} />
         </Win95Window>
-
-        {/* Decorative divider */}
-        <div className="flex items-center gap-4 opacity-40">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
-          <span className="text-pink-400 text-2xl">♡</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent"></div>
-        </div>
 
         {/* About Me - Dark Terminal */}
         <Win95Window
@@ -69,13 +56,6 @@ function App() {
           <AboutMeContent />
         </Win95Window>
 
-        {/* Decorative divider */}
-        <div className="flex items-center gap-4 opacity-40">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
-          <span className="text-cyan-400 text-2xl">⚡</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent"></div>
-        </div>
-
         {/* Fastfetch - Dracula */}
         <Win95Window
           id="fastfetch"
@@ -87,13 +67,6 @@ function App() {
         >
           <FastfetchContent />
         </Win95Window>
-
-        {/* Decorative divider */}
-        <div className="flex items-center gap-4 opacity-40">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-          <span className="text-purple-400 text-2xl">✧</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent"></div>
-        </div>
 
         {/* Skills - Amber CRT */}
         <Win95Window
@@ -107,13 +80,6 @@ function App() {
           <SkillsContent />
         </Win95Window>
 
-        {/* Decorative divider */}
-        <div className="flex items-center gap-4 opacity-40">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-          <span className="text-amber-400 text-2xl">{'>'}</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-        </div>
-
         {/* Contact - Blood Red Gothic */}
         <Win95Window
           id="contact"
@@ -126,112 +92,12 @@ function App() {
           <ContactContent />
         </Win95Window>
 
-        {/* Final decorative divider */}
-        <div className="flex items-center gap-4 opacity-40">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-400 to-transparent"></div>
-          <span className="text-red-400 text-2xl">⛧</span>
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-400 to-transparent"></div>
-        </div>
       </div>
     </div>
   );
 }
 
 // ===== COMPONENTS =====
-
-function FloatingDecorations() {
-  const hearts = ['♡', '♥', '❤', '💕', '✦', '★', '⛧', '✧'];
-  const decorations = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
-      symbol: hearts[i % hearts.length],
-      top: `${Math.random() * 90}%`,
-      left: `${Math.random() * 95}%`,
-      delay: `${Math.random() * 4}s`,
-      size: 12 + Math.random() * 20,
-      color: i % 3 === 0 ? '#ff69b4' : i % 3 === 1 ? '#e0b0ff' : '#00ffff',
-    }));
-  }, []);
-
-  return (
-    <>
-      {decorations.map((d, i) => (
-        <div
-          key={i}
-          className="floating-deco"
-          style={{
-            top: d.top,
-            left: d.left,
-            fontSize: d.size,
-            color: d.color,
-            opacity: 0.4,
-            animation: `float-heart ${3 + Math.random() * 3}s ease-in-out infinite`,
-            animationDelay: d.delay,
-          }}
-        >
-          {d.symbol}
-        </div>
-      ))}
-
-      {/* NSO Tutorial Cat - top right corner */}
-      <div className="fixed top-20 right-4 z-30 pointer-events-none hidden md:block opacity-60">
-        <img 
-          src="https://www.spriters-resource.com/media/assets/198/201023.png?updated=1755488925"
-          alt="tutorial cat"
-          className="w-16 h-16 object-contain"
-          style={{ imageRendering: 'pixelated' }}
-        />
-      </div>
-
-      {/* NSO Hearts decoration - scattered */}
-      <div className="fixed top-40 left-20 z-30 pointer-events-none hidden md:block opacity-40">
-        <img 
-          src="https://www.spriters-resource.com/media/assets/198/200970.png?updated=1755488923"
-          alt="hearts"
-          className="w-20 h-20 object-contain"
-          style={{ imageRendering: 'pixelated' }}
-        />
-      </div>
-    </>
-  );
-}
-
-function CharacterSprites() {
-  return (
-    <>
-      {/* Femme Soule - Drunken Goddess Reflux / PUKEY GODDESS SHOT TRICK - right side */}
-      <div 
-        className="fixed bottom-10 right-2 z-40 pointer-events-none hidden md:block"
-        style={{ filter: 'drop-shadow(0 0 15px rgba(139, 0, 0, 0.6))' }}
-      >
-        <img 
-          src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/4150720/c6067e139d8dd2cbf79c41a9c4e41e3bb088c95a/ss_c6067e139d8dd2cbf79c41a9c4e41e3bb088c95a.1920x1080.jpg?t=1778427552"
-          alt="Femme Soule - Drunken Goddess Reflux"
-          className="w-56 h-72 object-cover object-top rounded-lg border-2 border-red-900/50 opacity-70"
-          style={{ imageRendering: 'auto' }}
-        />
-        <div className="text-center mt-1 text-xs font-[VT323] text-red-400/60">
-          Femme Soule
-        </div>
-      </div>
-      
-      {/* KAngel Dark Angel - Needy Streamer Overload - left side */}
-      <div 
-        className="fixed bottom-10 left-2 z-40 pointer-events-none hidden md:block"
-        style={{ filter: 'drop-shadow(0 0 15px rgba(255, 105, 180, 0.6))' }}
-      >
-        <img 
-          src="https://www.spriters-resource.com/media/assets/198/200786.png?updated=1755488910"
-          alt="KAngel Dark Angel - Needy Streamer Overload"
-          className="w-36 h-52 object-contain character-sprite opacity-80"
-          style={{ imageRendering: 'pixelated' }}
-        />
-        <div className="text-center mt-1 text-xs font-[VT323] text-pink-400/60">
-          KAngel
-        </div>
-      </div>
-    </>
-  );
-}
 
 function Win95Window({ 
   id,
@@ -291,28 +157,28 @@ function HeaderContent({ viewerCount }: { viewerCount: number }) {
       </h1>
       
       {/* Subtitle */}
-      <div className="mt-3 text-lg text-purple-300 font-[VT323] cursor-blink">
+      <div className="mt-4 text-xl text-purple-300 font-[VT323] cursor-blink">
         &gt; streaming code into existence_
       </div>
 
       {/* Decorative divider */}
-      <div className="gothic-divider mt-4">
-        <span className="text-pink-400/80 text-xs font-[MedievalSharp]">♡ internet angel ♡</span>
+      <div className="gothic-divider mt-5">
+        <span className="text-pink-400/80 text-base font-[MedievalSharp]">internet angel</span>
       </div>
 
       {/* Tags */}
-      <div className="flex flex-wrap justify-center gap-2 mt-4">
+      <div className="flex flex-wrap justify-center gap-3 mt-5">
         {[
-          { text: 'Developer', icon: '♡' },
-          { text: 'Arch Linux', icon: '★' },
-          { text: '7900 XTX', icon: '⛧' },
-          { text: '64GB DDR5', icon: '✧' },
+          { text: 'Developer' },
+          { text: 'Arch Linux' },
+          { text: '7900 XTX' },
+          { text: '64GB DDR5' },
         ].map((tag) => (
           <span
             key={tag.text}
-            className="px-3 py-1 text-sm font-[VT323] bg-black/30 text-pink-300 border border-pink-500/40 rounded-full"
+            className="px-4 py-2 text-base font-[VT323] bg-black/30 text-pink-300 border border-pink-500/40 rounded-full"
           >
-            {tag.icon} {tag.text}
+            {tag.text}
           </span>
         ))}
       </div>
@@ -340,7 +206,7 @@ function HeaderContent({ viewerCount }: { viewerCount: number }) {
       </div>
 
       {/* Stream chat preview */}
-      <div className="stream-chat mt-4 max-w-xs mx-auto text-left">
+      <div className="stream-chat mt-5 max-w-md mx-auto text-left">
         <div className="chat-message">
           <span className="chat-user">xX_dark_coder_Xx:</span>
           <span className="text-gray-600"> nice setup!! is that a 7900 xtx??</span>
@@ -376,16 +242,16 @@ function AboutMeContent() {
           />
         </div>
         <div className="flex-1">
-          <div className="border-2 border-cyan-400/30 bg-black/40 p-3 text-sm font-[VT323] backdrop-blur-sm">
+          <div className="border-2 border-cyan-400/30 bg-black/40 p-4 text-lg font-[VT323] backdrop-blur-sm">
             <p className="text-cyan-400">
               <span className="text-green-400 font-bold">~ $</span> cat about.txt
             </p>
-            <p className="text-cyan-200 mt-2">
+            <p className="text-cyan-200 mt-3">
               Hey, I'm oculink. I spend most of my time writing code, tweaking my Arch setup, 
               and figuring out how to make things look cool on a screen. I've been running 
               Arch as my daily driver because I enjoy having full control over my system.
             </p>
-            <p className="text-cyan-200 mt-2">
+            <p className="text-cyan-200 mt-3">
               When I'm not coding, I'm probably researching hardware, messing with my rig 
               (currently rocking a 7900 XTX and an 8845HS), or going down some rabbit hole 
               on the Arch Wiki at 3am.
@@ -395,8 +261,8 @@ function AboutMeContent() {
       </div>
 
       {/* Info table */}
-      <div className="border-2 border-cyan-400/30 bg-black/40 p-3 backdrop-blur-sm">
-        <table className="w-full text-sm font-[VT323]">
+      <div className="border-2 border-cyan-400/30 bg-black/40 p-4 backdrop-blur-sm">
+        <table className="w-full text-lg font-[VT323]">
           <tbody>
             <tr><td className="pr-4 text-green-400 font-bold">OS:</td><td className="text-cyan-200">Arch Linux (btw)</td></tr>
             <tr><td className="pr-4 text-green-400 font-bold">CPU:</td><td className="text-cyan-200">Ryzen 7 8845HS</td></tr>
@@ -418,7 +284,7 @@ function AboutMeContent() {
 function FastfetchContent() {
   return (
     <div className="overflow-x-auto" style={{ background: '#282a36' }}>
-      <pre className="text-sm leading-relaxed whitespace-pre p-4" style={{ fontFamily: "'VT323', monospace" }}>
+      <pre className="text-lg leading-relaxed whitespace-pre p-4" style={{ fontFamily: "'VT323', monospace" }}>
         {'\n'}
         {'  '}<span className="terminal-user">oculink</span><span className="terminal-at">@</span><span className="terminal-host">archlinux</span>
         {'\n  '}<span style={{color:'#6272a4'}}>-----------------</span>
@@ -455,23 +321,23 @@ function SkillsContent() {
   ];
 
   return (
-    <div className="space-y-3">
-      <div className="text-center mb-4 font-[VT323] text-amber-400 text-sm">
+    <div className="space-y-4">
+      <div className="text-center mb-6 font-[VT323] text-amber-400 text-lg">
         ╔══════════════════════════╗<br/>
         ║  SYSTEM SKILLS ANALYSIS  ║<br/>
         ╚══════════════════════╝
       </div>
       
       {skills.map((skill, i) => (
-        <div key={i} className="space-y-1">
+        <div key={i} className="space-y-2">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <span className="text-amber-500 font-[VT323]">{skill.icon}</span>
-              <span className="text-sm font-[VT323] text-amber-300">{skill.name}</span>
+              <span className="text-amber-500 font-[VT323] text-lg">{skill.icon}</span>
+              <span className="text-lg font-[VT323] text-amber-300">{skill.name}</span>
             </div>
-            <span className="text-xs font-[VT323] text-amber-400">{skill.level}%</span>
+            <span className="text-base font-[VT323] text-amber-400">{skill.level}%</span>
           </div>
-          <div className="h-4 bg-black/60 border border-amber-600/50 relative overflow-hidden">
+          <div className="h-5 bg-black/60 border border-amber-600/50 relative overflow-hidden">
             <div 
               className="h-full bg-gradient-to-r from-amber-600 to-amber-400 transition-all duration-1000"
               style={{ width: `${skill.level}%`, boxShadow: '0 0 10px rgba(255, 176, 0, 0.5)' }}
@@ -502,60 +368,60 @@ function ContactContent() {
   ];
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {/* Gothic header */}
-      <div className="text-center font-[VT323] text-red-400 text-sm">
-        ⛧ ⛧ ⛧ SUMMONING RITUAL ⛧ ⛧ ⛧
+      <div className="text-center font-[VT323] text-red-400 text-lg">
+        SUMMONING RITUAL
       </div>
 
       {/* Marquee */}
-      <div className="border-2 border-red-800/50 bg-black/60 overflow-hidden py-1">
-        <div className="marquee-text text-red-400 font-[VT323] text-sm">
-          ⛧ ⛧ ⛧ Reach out through the void. Contact me if you dare to discuss code, hardware, or the secrets of the digital realm ⛧ ⛧ ⛧
+      <div className="border-2 border-red-800/50 bg-black/60 overflow-hidden py-2">
+        <div className="marquee-text text-red-400 font-[VT323] text-lg">
+          Reach out through the void. Contact me if you dare to discuss code, hardware, or the secrets of the digital realm
         </div>
       </div>
 
       {/* Links grid */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {links.map((link, i) => (
           <a
             key={i}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-1 py-3 text-center border-2 border-red-800/50 bg-black/40 hover:bg-red-900/30 transition-all hover:shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:border-red-600"
+            className="flex flex-col items-center gap-2 py-4 text-center border-2 border-red-800/50 bg-black/40 hover:bg-red-900/30 transition-all hover:shadow-[0_0_15px_rgba(139,0,0,0.5)] hover:border-red-600"
           >
-            <img src={link.icon} alt="" style={{ width: 20, height: 20, imageRendering: 'auto' }} />
-            <span className="text-sm font-[VT323] text-red-300">{link.label}</span>
+            <img src={link.icon} alt="" style={{ width: 24, height: 24, imageRendering: 'auto' }} />
+            <span className="text-base font-[VT323] text-red-300">{link.label}</span>
           </a>
         ))}
       </div>
 
       {/* Stream chat at bottom */}
-      <div className="border-2 border-red-800/50 bg-black/60 p-3 mt-4">
-        <div className="text-xs text-red-400 font-bold mb-1 font-[VT323]">⛧ Dark Chat ⛧</div>
-        <div className="border-b border-red-900/30 pb-1 mb-1">
-          <span className="text-red-500 font-[VT323] text-xs">demon_lord:</span>
-          <span className="text-red-300/70 font-[VT323] text-xs"> nice page, very cursed</span>
+      <div className="border-2 border-red-800/50 bg-black/60 p-4 mt-5">
+        <div className="text-base text-red-400 font-bold mb-2 font-[VT323]">Dark Chat</div>
+        <div className="border-b border-red-900/30 pb-2 mb-2">
+          <span className="text-red-500 font-[VT323] text-base">demon_lord:</span>
+          <span className="text-red-300/70 font-[VT323] text-base"> nice page, very cursed</span>
         </div>
-        <div className="border-b border-red-900/30 pb-1 mb-1">
-          <span className="text-purple-400 font-[VT323] text-xs">femme_soule:</span>
-          <span className="text-red-300/70 font-[VT323] text-xs"> surrender your soul to this aesthetic</span>
+        <div className="border-b border-red-900/30 pb-2 mb-2">
+          <span className="text-purple-400 font-[VT323] text-base">femme_soule:</span>
+          <span className="text-red-300/70 font-[VT323] text-base"> surrender your soul to this aesthetic</span>
         </div>
         <div>
-          <span className="text-pink-400 font-[VT323] text-xs">dark_angel:</span>
-          <span className="text-red-300/70 font-[VT323] text-xs"> first!! ⛧⛧⛧</span>
+          <span className="text-pink-400 font-[VT323] text-base">dark_angel:</span>
+          <span className="text-red-300/70 font-[VT323] text-base"> first!!</span>
         </div>
       </div>
 
       {/* Footer message */}
-      <div className="text-center space-y-2">
+      <div className="text-center space-y-3">
         <div className="flex items-center gap-2 justify-center opacity-60">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
-          <span className="text-red-400/60 text-xs font-[MedievalSharp]">⛧ fin ⛧</span>
+          <span className="text-red-400/60 text-sm font-[MedievalSharp]">fin</span>
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-red-600 to-transparent"></div>
         </div>
-        <p className="text-xs text-red-400/60 font-[VT323]">
+        <p className="text-base text-red-400/60 font-[VT323]">
           {new Date().getFullYear()} oculink | Forged in the fires of Arch Linux
         </p>
       </div>
