@@ -4,6 +4,7 @@ function App() {
   const [zIndex, setZIndex] = useState<Record<string, number>>({});
   const [highestZ, setHighestZ] = useState(10);
   const [timestamp, setTimestamp] = useState('00:00:00');
+  const [webcamOpacity, setWebcamOpacity] = useState(0.7);
 
   // VHS timestamp counter
   useEffect(() => {
@@ -31,6 +32,23 @@ function App() {
     fastfetch: { width: '50%', height: '500px', transform: 'rotate(-0.5deg)' },
   }), []);
 
+  // Mobile layout - stacked
+  const mobileLayout = useMemo(() => ({
+    header: { width: '100%', transform: 'none', margin: '0' },
+    about: { width: '100%', height: 'auto', minHeight: '400px', transform: 'none' },
+    fastfetch: { width: '100%', height: 'auto', minHeight: '500px', transform: 'none' },
+  }), []);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const currentLayout = isMobile ? mobileLayout : windowLayout;
+
   return (
     <div className="main-bg scanlines">
       {/* VHS Overlays */}
@@ -44,20 +62,26 @@ function App() {
         <div 
           id="header"
           className="error-dialog"
-          style={{ ...windowLayout.header, zIndex: zIndex['header'] || 5 }}
+          style={{ ...currentLayout.header, zIndex: zIndex['header'] || 5 }}
           onClick={() => bringToFront('header')}
         >
           <HeaderContent />
         </div>
 
-        {/* Windows Row - Side by side */}
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'flex-start' }}>
+        {/* Windows Row - Side by side on desktop, stacked on mobile */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '20px', 
+          justifyContent: 'center', 
+          alignItems: 'flex-start',
+          flexDirection: isMobile ? 'column' : 'row'
+        }}>
           {/* About Me - Dark Terminal */}
           <Win95Window
             id="about"
             title="~/about_me.txt"
             theme="terminal"
-            style={windowLayout.about}
+            style={currentLayout.about}
             zIndex={zIndex['about'] || 6}
             onFocus={() => bringToFront('about')}
           >
@@ -69,7 +93,7 @@ function App() {
             id="fastfetch"
             title="oculink@archlinux: ~"
             theme="dracula"
-            style={windowLayout.fastfetch}
+            style={currentLayout.fastfetch}
             zIndex={zIndex['fastfetch'] || 8}
             onFocus={() => bringToFront('fastfetch')}
           >
@@ -81,7 +105,18 @@ function App() {
       </div>
 
       {/* Floating Webcam Overlay - Qtie */}
-      <div className="webcam-overlay-fixed">
+      <div className="webcam-overlay-fixed" style={{ opacity: webcamOpacity }}>
+        <div className="webcam-slider-container">
+          <input
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.1"
+            value={webcamOpacity}
+            onChange={(e) => setWebcamOpacity(parseFloat(e.target.value))}
+            className="webcam-slider"
+          />
+        </div>
         <div className="webcam-rgb-frame">
           <div className="webcam-inner">
             <img 
