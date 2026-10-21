@@ -21,7 +21,7 @@ For games, you can check my Steam profile on what games I play. But I do also pl
     <img src="https://img.shields.io/badge/Portfolio-oculink.github.io-FFFFFF?style=flat-square&logo=googlechrome&logoColor=white&color=181717" alt="Portfolio"/>
   </a>
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://steamcommunity.com/">
+  <a href="https://steamcommunity.com/id/oculink/">
     <img src="https://img.shields.io/badge/Steam-Profile-FFFFFF?style=flat-square&logo=steam&logoColor=white&color=181717" alt="Steam"/>
   </a>
 </div>
